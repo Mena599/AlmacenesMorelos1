@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.almasenesmorelos1.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.LoginController">
+    <children>
+        <VBox alignment="CENTER" layoutX="150.0" layoutY="88.0" prefWidth="300" spacing="15.0">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Iniciar Sesión" />
+            <TextField fx:id="txtUsuario" promptText="Usuario" />
+            <PasswordField fx:id="txtContrasena" promptText="Contraseña" />
+            <Button onAction="#handleLogin" text="Entrar" />
+            <Label fx:id="lblMensaje" textFill="red" />
+        </VBox>
+    </children>
 </AnchorPane>

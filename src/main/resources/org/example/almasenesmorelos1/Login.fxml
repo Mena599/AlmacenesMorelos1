@@ -9,11 +9,7 @@
     <children>
       <AnchorPane layoutX="53.0" layoutY="41.0" maxHeight="400.0" maxWidth="486.0" minHeight="300.0" minWidth="400.0" prefHeight="390.0" prefWidth="486.0" style="-fx-background-color: #516E7E; -fx-background-radius: 20;">
          <children>
-            <ImageView fx:id="imgLogo" fitHeight="84.0" fitWidth="98.0" layoutX="201.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../img/Logo.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="imgLogo" fitHeight="94.0" fitWidth="99.0" layoutX="204.0" pickOnBounds="true" preserveRatio="true" />
             <AnchorPane layoutX="85.0" layoutY="105.0" prefHeight="259.0" prefWidth="301.0" style="-fx-background-color: #FFF#FF; -fx-background-radius: 20;">
                <children>
                      <PasswordField fx:id="txtContrasena" layoutX="105.0" layoutY="176.0" prefHeight="25.0" prefWidth="115.0" promptText="Contraseña" />
@@ -28,9 +24,9 @@
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fx:id="imgUser" fitHeight="69.0" fitWidth="48.0" layoutX="14.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgUser" fitHeight="69.0" fitWidth="48.0" layoutX="30.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../img/Usuario.png" />
+                        <Image url="@../../../img/Usuario.png" />
                      </image>
                   </ImageView>
                   <Label alignment="TOP_CENTER" layoutX="97.0" layoutY="44.0" text="Bienbenido!" textAlignment="CENTER">

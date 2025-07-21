@@ -9,12 +9,12 @@
     <children>
       <AnchorPane layoutX="53.0" layoutY="41.0" maxHeight="400.0" maxWidth="486.0" minHeight="300.0" minWidth="400.0" prefHeight="390.0" prefWidth="486.0" style="-fx-background-color: #516E7E; -fx-background-radius: 20;">
          <children>
-            <ImageView fitHeight="84.0" fitWidth="98.0" layoutX="201.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgLogo" fitHeight="84.0" fitWidth="98.0" layoutX="201.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../img/Recurso%201.png" />
+                  <Image url="@../../../../img/Logo.png" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="92.0" layoutY="108.0" prefHeight="259.0" prefWidth="301.0" style="-fx-background-color: #FFF#FF; -fx-background-radius: 20;">
+            <AnchorPane layoutX="85.0" layoutY="105.0" prefHeight="259.0" prefWidth="301.0" style="-fx-background-color: #FFF#FF; -fx-background-radius: 20;">
                <children>
                      <PasswordField fx:id="txtContrasena" layoutX="105.0" layoutY="176.0" prefHeight="25.0" prefWidth="115.0" promptText="Contraseña" />
                      <TextField fx:id="txtUsuario" layoutX="105.0" layoutY="112.0" prefHeight="25.0" prefWidth="115.0" promptText="Usuario" />
@@ -28,7 +28,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fitHeight="69.0" fitWidth="48.0" layoutX="14.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgUser" fitHeight="69.0" fitWidth="48.0" layoutX="14.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../img/Usuario.png" />
                      </image>
@@ -40,7 +40,7 @@
                   </Label>
                   <Label layoutX="105.0" layoutY="85.0" text="Usuario" />
                   <Label layoutX="105.0" layoutY="153.0" text="Contraseña" />
-                  <Label fx:id="lblMensaje" layoutX="137.0" layoutY="220.0" />
+                  <Label fx:id="lblMensaje" layoutX="71.0" layoutY="206.0" prefHeight="28.0" prefWidth="26.0" />
                </children>
             </AnchorPane>
          </children>

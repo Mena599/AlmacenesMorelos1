@@ -32,7 +32,7 @@
                         <Image url="@../../../img/Usuario.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="TOP_CENTER" layoutX="97.0" layoutY="44.0" text="Bienbenido!" textAlignment="CENTER">
+                  <Label alignment="TOP_CENTER" layoutX="97.0" layoutY="44.0" text="Bienvenido!" textAlignment="CENTER">
                      <font>
                         <Font name="Corbel Light Italic" size="24.0" />
                      </font>

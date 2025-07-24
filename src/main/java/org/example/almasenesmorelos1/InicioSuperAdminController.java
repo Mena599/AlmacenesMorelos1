@@ -16,11 +16,11 @@ public class InicioSuperAdminController {
     @FXML
     private void abrirVentana2(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Clientes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Clientes.fxml"));
             Parent root = loader.load();
 
             // Obtener el stage actual desde el botón que se presionó
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Clientes");
             stage.show();

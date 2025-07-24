@@ -7,9 +7,7 @@
    <children>
       <AnchorPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-
              <Button fx:id="btnCliente" text="Ir a Ventana 2" onAction="#abrirVentana2" />
-
          </children>
       </AnchorPane>
    </children>

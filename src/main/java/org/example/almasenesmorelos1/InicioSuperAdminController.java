@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class InicioSuperAdminController {
 
     @FXML
-    private Button btnClientes;
+    private Button btnCliente;
 
     @FXML
     private void abrirVentana2(ActionEvent event) {

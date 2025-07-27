@@ -6,9 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:controller="org.example.almasenesmorelos1.ClientesController"
-
-      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="668.0" style="-fx-background-radius: 20; -fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="668.0" style="-fx-background-radius: 20; -fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.ClientesController">
    <children>
       <HBox prefHeight="100.0" prefWidth="668.0">
          <children>
@@ -49,7 +47,7 @@
             <Insets />
          </opaqueInsets>
       </HBox>
-      <HBox layoutX="463.0" layoutY="123.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="174.0">
+      <HBox layoutX="462.0" layoutY="97.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="174.0">
          <children>
             <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#abrirFormularioCliente" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: #304850; -fx-background-radius: 10;" text="+  Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
@@ -61,6 +59,6 @@
             </Button>
          </children>
       </HBox>
-      <FlowPane layoutX="33.0" layoutY="157.0" prefHeight="200.0" prefWidth="200.0" />
+      <FlowPane fx:id="TargetasFlow" layoutX="39.0" layoutY="149.0" prefHeight="308.0" prefWidth="574.0" />
    </children>
 </Pane>

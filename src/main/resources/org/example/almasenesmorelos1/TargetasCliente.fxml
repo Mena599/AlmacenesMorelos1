@@ -4,11 +4,11 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="327.0" prefWidth="229.0" style="-fx-background-color: #607B8B;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.TargetasClienteController">
+<AnchorPane prefHeight="300.0" prefWidth="229.0" style="-fx-background-color: #607B8B; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.TargetasClienteController">
    <children>
       <ImageView fx:id="imgCliente" fitHeight="125.0" fitWidth="100.0" layoutX="65.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/Usuario.png" />
+            <Image url="@../../../img/user.png" />
          </image>
       </ImageView>
 
@@ -20,5 +20,14 @@
 
       <Label layoutX="14.0" layoutY="258.0" text="Telefono" textFill="WHITE" />
       <Label fx:id="lblTelefono" layoutX="14.0" layoutY="275.0" textFill="WHITE" />
+      <Button fx:id="btnEliminar" layoutX="140.0" layoutY="252.0" mnemonicParsing="false" onAction="#OnEliminarAction" prefHeight="17.0" prefWidth="75.0" style="-fx-background-radius: 8; -fx-background-color: #304850;">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/filled-trash.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

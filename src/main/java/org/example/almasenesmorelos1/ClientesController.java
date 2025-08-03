@@ -21,6 +21,10 @@ public class ClientesController {
         btnAgregar.setOnAction(this::abrirFormularioCliente);
     }
 
+    public FlowPane getFlowPane() {
+        return flowPaneClientes;
+    }
+
     public void abrirFormularioCliente(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/almasenesmorelos1/RegistrarClientes.fxml"));

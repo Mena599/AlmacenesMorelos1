@@ -3,7 +3,6 @@ package org.example.almasenesmorelos1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +19,7 @@ public class RegistrarClientesController {
     private TextField txtCorreo;
 
     @FXML
-    private TextField txtID;
+    private TextField txtTelefono;
 
     @FXML
     private Button btnRegistrar;
@@ -33,34 +32,40 @@ public class RegistrarClientesController {
     }
 
     @FXML
-    private void handleRegistrar(ActionEvent event) {
+    private void OnRegistarAction(ActionEvent event) {
         try {
             // 1. Obtener los datos del formulario
             String nombre = txtNombre.getText();
             String correo = txtCorreo.getText();
-            String id = txtID.getText();
+            String telefono = txtTelefono.getText();
 
             // 2. Cargar la tarjeta
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Targeta.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TargetasCliente.fxml"));
             AnchorPane tarjeta = loader.load();
 
             // 3. Obtener el controlador y asignar datos
-            TargetasCliente controller = loader.getController();
-            controller.setNombre(nombre);
-            controller.setCorreo(correo);
-            controller.setId(id);
+            TargetasClienteController controller = loader.getController();
+            controller.setLblNombre(nombre);
+            controller.setLblCorreo(correo);
+            controller.setLblTelefono(telefono);
 
             // 4. Agregar tarjeta al FlowPane en la vista de Clientes
             if (clientesController != null) {
-                clientesController.getFlowPane().getChildren().add(tarjeta);
+                clientesController.getTargetasFlow().getChildren().add(tarjeta);
             }
 
             // 5. Cerrar esta ventana (la del formulario)
             Stage stage = (Stage) btnRegistrar.getScene().getWindow();
             stage.close();
 
+            System.out.println("ClientesController: " + clientesController);
+            System.out.println("FlowPane: " + (clientesController != null ? clientesController.getTargetasFlow() : "null"));
+            System.out.println("Nombre capturado: " + nombre);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
 }

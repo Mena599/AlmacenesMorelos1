@@ -7,16 +7,14 @@ public class TargetasClienteController {
 
     @FXML private Label lblNombre;
     @FXML private Label lblCorreo;
-    @FXML private Label lblID;
-
+    @FXML private Label lblTelefono;
     public void setLblNombre(String lblNombre) {
         this.lblNombre.setText(lblNombre);
     }
     public void setLblCorreo(String lblCorreo) {
         this.lblCorreo.setText(lblCorreo);
     }
-    public void setLblID(String lblID) {
-        this.lblID.setText(lblID);
+    public void setLblTelefono(String lblTelefono) {
+        this.lblTelefono.setText(lblTelefono);
     }
-
 }

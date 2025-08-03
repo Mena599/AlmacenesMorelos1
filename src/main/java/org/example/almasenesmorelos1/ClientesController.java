@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -15,30 +16,40 @@ public class ClientesController {
 
     @FXML
     public Button btnAgregar;
-
     @FXML
     private void initialize() {
         btnAgregar.setOnAction(this::abrirFormularioCliente);
     }
+    @FXML
+    private FlowPane TargetasFlow;
 
-    public FlowPane getFlowPane() {
-        return flowPaneClientes;
+    public FlowPane getTargetasFlow() {
+        return TargetasFlow;
     }
-
-    public void abrirFormularioCliente(ActionEvent event) {
+    @FXML
+    private void abrirFormularioCliente(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/almasenesmorelos1/RegistrarClientes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistrarClientes.fxml"));
             Parent root = loader.load();
 
+            // Obtenemos el controlador de la ventana emergente
+            RegistrarClientesController registrarController = loader.getController();
+
+            // Le pasamos la referencia de este mismo controlador (ClientesController)
+            registrarController.setClientesController(this); // <- ¡ESTO ES CLAVE!
+
+            // Creamos y mostramos la ventana emergente
             Stage stage = new Stage();
-            stage.setTitle("Registrar Cliente");
-            stage.initModality(Modality.APPLICATION_MODAL); // ventana modal
-            stage.setResizable(false);
             stage.setScene(new Scene(root));
-            stage.showAndWait(); // bloquea hasta que se cierre
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Registrar Cliente");
+            stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
 }

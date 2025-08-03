@@ -36,7 +36,7 @@
         <DatePicker fx:id="dpFechaNacimiento" layoutX="50.0" layoutY="445.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
         <!-- Botón Registrar -->
-        <Button fx:id="btnRegistrar" layoutX="150.0" layoutY="520.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="167.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;" text="Registrar Cliente" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="35.0">
+        <Button fx:id="btnRegistrar" layoutX="150.0" layoutY="520.0" mnemonicParsing="false" onAction="#OnRegistarAction" prefHeight="45.0" prefWidth="167.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;" text="Registrar Cliente" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="35.0">
             <font>
                 <Font name="Arial" size="16.0" />
             </font>

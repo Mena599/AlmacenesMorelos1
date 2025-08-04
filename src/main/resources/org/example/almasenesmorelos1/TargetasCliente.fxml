@@ -20,7 +20,7 @@
 
       <Label layoutX="14.0" layoutY="258.0" text="Telefono" textFill="WHITE" />
       <Label fx:id="lblTelefono" layoutX="14.0" layoutY="275.0" textFill="WHITE" />
-      <Button fx:id="btnEliminar" layoutX="140.0" layoutY="252.0" mnemonicParsing="false" onAction="#OnEliminarAction" prefHeight="17.0" prefWidth="75.0" style="-fx-background-radius: 8; -fx-background-color: #304850;">
+      <Button fx:id="btnEliminar" layoutX="140.0" layoutY="252.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="17.0" prefWidth="75.0" style="-fx-background-radius: 8; -fx-background-color: #304850;">
          <graphic>
             <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                <image>

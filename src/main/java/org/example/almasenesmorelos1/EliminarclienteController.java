@@ -1,14 +1,40 @@
 package org.example.almasenesmorelos1;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class EliminarclienteController {
 
-    @FXML private Label lblAlerta;
-    @FXML private Button bnbsi;
-    @FXML private Button btnno;
+    private boolean confirmado = false;
+
+    public boolean isConfirmado() {
+        return confirmado;
+    }
+
+    @FXML
+    private Button btnsi;
+
+    @FXML
+    private Button btnno;
+
+    @FXML
+    private void OnsiAction(ActionEvent event) {
+        confirmado = true;
+        cerrarVentana(event);
+    }
+
+    @FXML
+    private void OnnoAction(ActionEvent event) {
+        confirmado = false;
+        cerrarVentana(event);
+    }
+
+    private void cerrarVentana(ActionEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
 
 }

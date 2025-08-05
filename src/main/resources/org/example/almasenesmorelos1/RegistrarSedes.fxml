@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="421.0" spacing="15.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #3a566f, #516d87, #3a566f);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="421.0" spacing="15.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #3a566f, #516d87, #3a566f);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarSedesController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -29,10 +22,10 @@
 
     <Label text="Sede" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <TextField promptText="ID Sede" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+        <TextField fx:id="idSedeField" promptText="ID Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../img/User.png" />
+                <Image url="@../../../img/user.png" />
             </image>
         </ImageView>
         <padding>
@@ -42,10 +35,10 @@
 
     <Label text="Municipio" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <TextField promptText="Municipio" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+        <TextField fx:id="municipioField" promptText="Municipio" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../img/User.png" />
+                <Image url="@../../../img/user.png" />
             </image>
         </ImageView>
         <padding>
@@ -55,7 +48,7 @@
 
     <Label text="Admi-Sede" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <PasswordField promptText="ID Admi-Sede" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+        <PasswordField fx:id="idAdmiField" promptText="ID Admi-Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/eye.png" />
@@ -68,7 +61,7 @@
 
     <Label text="Confirmar ID Admin" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <PasswordField promptText="ID Admi-Sede" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+        <PasswordField fx:id="confirmarIdAdmiField" promptText="ID Admi-Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/eye.png" />
@@ -81,7 +74,7 @@
 
     <Label text="Número Telefónico" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <TextField promptText="Teléfono" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+        <TextField fx:id="telefonoField" promptText="Teléfono" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/call.png" />
@@ -94,9 +87,9 @@
 
     <Label text="Fecha de registro" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <TextField promptText="Dia" prefWidth="70" />
-        <TextField promptText="Mes" prefWidth="70" />
-        <TextField promptText="Año" prefWidth="70" />
+        <TextField fx:id="diaField" prefWidth="70" promptText="Dia" />
+        <TextField fx:id="mesField" prefWidth="70" promptText="Mes" />
+        <TextField fx:id="anioField" prefWidth="70" promptText="Año" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/calendar.png" />
@@ -105,9 +98,9 @@
     </HBox>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <CheckBox style="-fx-text-fill: white;" />
+        <CheckBox fx:id="terminosCheckBox" style="-fx-text-fill: white;" />
         <Label text="Acepto todos los términos y condiciones" textFill="WHITE" />
     </HBox>
 
-    <Button text="Registrar" style="-fx-background-color: #37475A; -fx-text-fill: white;" />
+    <Button fx:id="registrarButton" onAction="#handleRegistrarButtonAction" style="-fx-background-color: #37475A; -fx-text-fill: white;" text="Registrar" />
 </VBox>

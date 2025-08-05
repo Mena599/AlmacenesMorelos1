@@ -12,7 +12,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #f7f3e9;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="org.example.almasenesmorelos1.SedesController"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #f7f3e9;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="1180.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
             <children>
@@ -33,15 +36,15 @@
                         </Text>
                     </children>
                 </StackPane>
-                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="userIcon" onMouseClicked="#handleUserIconAction" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../img/User.png" />
+                        <Image url="@../../../img/user.png" />
                     </image>
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>
                 </ImageView>
-                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="logoutIcon" onMouseClicked="#handleLogoutIconAction" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../img/log-out.png" />
                     </image>
@@ -62,7 +65,7 @@
                         <Insets bottom="10.0" left="20.0" top="10.0" />
                     </padding>
                 </Label>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="Cuernavaca" textFill="WHITE">
+                <Button fx:id="cuernavacaButton" mnemonicParsing="false" onAction="#handleSedeButton" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="Cuernavaca" textFill="WHITE">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -70,7 +73,7 @@
                         <Insets left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="Temixco" textFill="WHITE">
+                <Button fx:id="temixcoButton" mnemonicParsing="false" onAction="#handleSedeButton" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="Temixco" textFill="WHITE">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -78,7 +81,7 @@
                         <Insets left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="E. Zapata" textFill="WHITE">
+                <Button fx:id="eZapataButton" mnemonicParsing="false" onAction="#handleSedeButton" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="E. Zapata" textFill="WHITE">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -89,7 +92,7 @@
             </children>
         </VBox>
 
-        <Button layoutX="1110.0" layoutY="110.0" mnemonicParsing="false" style="-fx-background-color: #4a637c; -fx-background-radius: 5;" text="+ Añadir" textFill="WHITE">
+        <Button fx:id="addButton" onAction="#handleAddButtonAction" layoutX="1110.0" layoutY="110.0" mnemonicParsing="false" style="-fx-background-color: #4a637c; -fx-background-radius: 5;" text="+ Añadir" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font>
@@ -114,7 +117,8 @@
                             <Insets top="10.0" />
                         </VBox.margin>
                     </Label>
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;">
+                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;"
+                            onAction="#handleDeleteButtonAction">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -124,7 +128,8 @@
                         <graphic>
                             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../../../img/filled-trash.png" /> </image>
+                                    <Image url="@../../../img/filled-trash.png" />
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
@@ -149,7 +154,8 @@
                             <Insets top="10.0" />
                         </VBox.margin>
                     </Label>
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;">
+                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;"
+                            onAction="#handleDeleteButtonAction">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -159,7 +165,8 @@
                         <graphic>
                             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../../../img/filled-trash.png" /> </image>
+                                    <Image url="@../../../img/filled-trash.png" />
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
@@ -184,7 +191,8 @@
                             <Insets top="10.0" />
                         </VBox.margin>
                     </Label>
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;">
+                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;"
+                            onAction="#handleDeleteButtonAction">
                         <font>
                             <Font size="18.0" />
                         </font>
@@ -194,7 +202,8 @@
                         <graphic>
                             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../../../img/filled-trash.png" /> </image>
+                                    <Image url="@../../../img/filled-trash.png" />
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
@@ -214,7 +223,7 @@
                         <Image url="@../../../img/phone-icon.png" />
                     </image>
                     <HBox.margin>
-                        <Insets left="05.0" />
+                        <Insets left="5.0" />
                     </HBox.margin>
                 </ImageView>
                 <Label text="Email: almacenesMorelos@utez.edu.mx" textFill="WHITE">

@@ -60,7 +60,6 @@
                    <TextFlow maxWidth="400">
                        <Text fill="WHITE" style="-fx-font-size: 14px;" text="En este apartado  puedes registar a los admins de sedes y asignar a su sede correspondiente. Toca el boton para ver." />
                    </TextFlow>
-
                </children>
                <padding>
                   <Insets left="10.0" top="20.0" />

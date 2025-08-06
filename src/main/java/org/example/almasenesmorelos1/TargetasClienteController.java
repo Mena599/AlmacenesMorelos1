@@ -7,9 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.awt.event.ActionEvent;
+
 import java.io.IOException;
 
 public class TargetasClienteController {
@@ -18,16 +19,19 @@ public class TargetasClienteController {
     @FXML private Label lblCorreo;
     @FXML private Label lblTelefono;
     @FXML private Button btnEliminar;
+    @FXML private AnchorPane rootPane; // <-- este es el nodo raíz de la tarjeta
+
     public void setLblNombre(String lblNombre) {
         this.lblNombre.setText(lblNombre);
     }
+
     public void setLblCorreo(String lblCorreo) {
         this.lblCorreo.setText(lblCorreo);
     }
+
     public void setLblTelefono(String lblTelefono) {
         this.lblTelefono.setText(lblTelefono);
     }
-    public void setBtnEliminar(Button btnEliminar) { this .btnEliminar = btnEliminar; }
 
     @FXML
     public void eliminarCliente(javafx.event.ActionEvent event) {
@@ -44,8 +48,9 @@ public class TargetasClienteController {
             dialog.showAndWait();
 
             if (controller.isConfirmado()) {
-                // Lógica para eliminar la tarjeta o el usuario
-                ;  // Asegúrate de que este método exista
+                // Se elimina la tarjeta (AnchorPane) del FlowPane padre
+                Pane parent = (Pane) rootPane.getParent();
+                parent.getChildren().remove(rootPane);
             }
 
         } catch (IOException e) {

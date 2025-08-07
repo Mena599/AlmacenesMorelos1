@@ -21,7 +21,8 @@ public class InicioController {
     private Button btnMirar;
     @FXML
     private Button btnMirar2;
-
+     @FXML
+     private Button btnRegresar;
     @FXML
     private void onInicioAction(){
 
@@ -63,7 +64,10 @@ public class InicioController {
         stage.setTitle("Renta");
     }
 
+ //Menu superior
+    @FXML
+    private void onRegresarClick(){
 
-
+    }
 
 }

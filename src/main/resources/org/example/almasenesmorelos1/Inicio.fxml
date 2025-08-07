@@ -74,13 +74,7 @@
          </children>
       </VBox>
        <Button fx:id="btnRegresar" layoutX="864.0" layoutY="46.0" onAction="#onRegresarClick">
-           <graphic>
-               <ImageView fitHeight="20" fitWidth="20">
-                   <image>
-                       <Image url="@" />
-                   </image>
-               </ImageView>
-           </graphic>
+
        </Button>
    </children>
 </AnchorPane>

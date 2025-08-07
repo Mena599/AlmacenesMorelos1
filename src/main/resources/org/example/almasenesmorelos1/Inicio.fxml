@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.Inicio">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.InicioController">
    <children>
       <ImageView fitHeight="112.0" fitWidth="116.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="425.0" layoutY="14.0" text="Inicio" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="411.0" AnchorPane.topAnchor="14.0">
@@ -17,28 +18,69 @@
       <VBox layoutX="30.0" layoutY="191.0" prefHeight="252.0" prefWidth="100.0" spacing="10.0">
          <children>
             <Button fx:id="btnInicio" mnemonicParsing="false" onAction="#onInicioAction" prefHeight="72.0" prefWidth="125.0" style="-fx-background-color: #A1B3BE; -fx-background-radius: 10;" text="Inicio" />
-            <Button fx:id="btnCompra" mnemonicParsing="false" onAction="#OnActionCompra" prefHeight="75.0" prefWidth="125.0" style="-fx-background-color: #A1B3BE; -fx-background-radius: 10;" text="Compra" />
-            <Button fx:id="btn" mnemonicParsing="false" onAction="#OnRentaAction" prefHeight="75.0" prefWidth="125.0" style="-fx-background-color: #A1B3BE; -fx-background-radius: 10;" text="Renta" />
+            <Button fx:id="btnCompra" mnemonicParsing="false" onAction="#OnCompraAction" prefHeight="75.0" prefWidth="125.0" style="-fx-background-color: #A1B3BE; -fx-background-radius: 10;" text="Compra" />
+            <Button fx:id="btnRenta" mnemonicParsing="false" onAction="#OnRentaAction" prefHeight="75.0" prefWidth="125.0" style="-fx-background-color: #A1B3BE; -fx-background-radius: 10;" text="Renta" />
          </children>
       </VBox>
       <VBox layoutX="226.0" layoutY="116.0" prefHeight="454.0" prefWidth="615.0" spacing="10.0">
          <children>
-            <HBox prefHeight="229.0" prefWidth="742.0" style="-fx-background-color: #607B8B;">
+            <HBox prefHeight="229.0" prefWidth="742.0" spacing="10.0" style="-fx-background-color: #607B8B; -fx-background-radius: 20;">
                <children>
                   <ImageView fitHeight="182.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="20.0" top="20.0" />
                      </HBox.margin>
                   </ImageView>
-                   <TextFlow maxWidth="400" prefHeight="210.0" prefWidth="196.0">
-                       <Text fill="WHITE" style="-fx-font-size: 14px;" text="Aqui Puedes ver todos lo alamacenes que tenemos en el catalogo y seccion de venta, puedes eleigir en varios tamannos y precios que mas se ajusten a tu presupueso, pulsa la opcion de , miarar para acceder a todo nuestro catalago" wrappingWidth="249.0180206298828" />
+                   <TextFlow maxWidth="400" minHeight="-Infinity" minWidth="-Infinity" prefHeight="83.0" prefWidth="215.0" textAlignment="JUSTIFY">
+                       <Text fill="WHITE" lineSpacing="4.0" style="-fx-font-size: 14px;" text="Aqui Puedes ver todos lo alamacenes que tenemos en el catalogo y seccion de venta, puedes eleigir en varios tamannos y precios que mas se ajusten a tu presupueso, pulsa la opcion de , miarar para acceder a todo nuestro catalago" textAlignment="CENTER" wrappingWidth="215.00001525878906" />
+                     <opaqueInsets>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
                    </TextFlow>
+                  <Button fx:id="btnMirar" mnemonicParsing="false" onAction="#OnMirarAction" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #304850; -fx-background-radius: 10;" text="Mirar" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="70.0" top="170.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin></HBox>
-            <HBox prefHeight="230.0" prefWidth="742.0" style="-fx-background-color: #607B8B;" />
+            <HBox prefHeight="230.0" prefWidth="742.0" spacing="10.0" style="-fx-background-color: #607B8B; -fx-background-radius: 20;">
+               <children>
+                  <ImageView fitHeight="182.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                   <TextFlow maxWidth="400" minHeight="-Infinity" minWidth="-Infinity" prefHeight="83.0" prefWidth="215.0" textAlignment="JUSTIFY">
+                       <Text fill="WHITE" lineSpacing="4.0" style="-fx-font-size: 14px;" text="Aqui Puedes ver todos lo alamacenes que tenemos en el catalogo y seccion de Renta, puedes eleigir en varios tamannos y precios que mas se ajusten a tu presupueso, pulsa la opcion de , miarar para acceder a todo nuestro catalago" textAlignment="CENTER" wrappingWidth="215.00001525878906" />
+                       <opaqueInsets>
+                           <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                       </opaqueInsets>
+                       <cursor>
+                           <Cursor fx:constant="CROSSHAIR" />
+                       </cursor>
+                   </TextFlow>
+                  <Button fx:id="btnMirar2" mnemonicParsing="false" onAction="#OnMirar2Action" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #304850; -fx-background-radius: 10;" text="Mirar" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="70.0" top="170.0" />
+                     </HBox.margin>
+                  </Button>
+               </children></HBox>
          </children>
       </VBox>
+       <Button fx:id="btnRegresar" layoutX="864.0" layoutY="46.0" onAction="#onRegresarClick">
+           <graphic>
+               <ImageView fitHeight="20" fitWidth="20">
+                   <image>
+                       <Image url="@" />
+                   </image>
+               </ImageView>
+           </graphic>
+       </Button>
    </children>
 </AnchorPane>

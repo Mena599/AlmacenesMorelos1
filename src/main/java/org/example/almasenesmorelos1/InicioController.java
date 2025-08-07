@@ -24,7 +24,12 @@ public class InicioController {
      @FXML
      private Button btnRegresar;
     @FXML
-    private void onInicioAction(){
+    private void onInicioAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Compra.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnCompra.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Compra");
 
     }
     @FXML
@@ -66,8 +71,12 @@ public class InicioController {
 
  //Menu superior
     @FXML
-    private void onRegresarClick(){
-
+    private void onRegresarClick() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnInicio.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("inicio");
     }
 
 }

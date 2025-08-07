@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenes"
-            prefHeight="400.0" prefWidth="600.0">
+<!-- Formulario de registro de almacen para JavaFX Scene Builder -->
 
+<AnchorPane fx:id="rootPane" prefHeight="600.0" prefWidth="421.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
+    <children>
+        <!-- Título del formulario -->
+        <Label fx:id="lblTitulo" layoutX="125.0" layoutY="30.0" style="-fx-text-fill: #87A1B1; -fx-font-weight: bold;" text="Registro de Nuevo Almacen" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
+            <font>
+                <Font name="Arial" size="24.0" />
+            </font>
+        </Label>
+
+        <!-- Campo Nombre -->
+        <Label fx:id="lblTamaño" layoutX="50.0" layoutY="100.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese el tamaño del almacen" />
+        <TextField fx:id="txtTamaño" layoutX="50.0" layoutY="125.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+
+        <!-- Campo Apellidos -->
+        <Label fx:id="lblCede" layoutX="50.0" layoutY="180.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese la cede a la que pertenece e almacen" />
+        <TextField fx:id="txtCede" layoutX="50.0" layoutY="205.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+
+        <!-- Campo Correo Electrónico -->
+        <Label fx:id="lblCorreo" layoutX="50.0" layoutY="260.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su correo electrónico" />
+        <TextField fx:id="txtCorreo" layoutX="50.0" layoutY="285.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+
+        <!-- Campo Teléfono -->
+        <Label fx:id="lblTelefono" layoutX="50.0" layoutY="340.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su número de teléfono" />
+        <TextField fx:id="txtTelefono" layoutX="50.0" layoutY="365.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+
+        <!-- Campo Fecha de Nacimiento -->
+        <Label fx:id="lblFechaNacimiento" layoutX="50.0" layoutY="420.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su fecha de nacimiento" />
+        <DatePicker fx:id="dpFechaNacimiento" layoutX="50.0" layoutY="445.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+
+        <!-- Botón Registrar -->
+        <Button fx:id="btnRegistrar" layoutX="150.0" layoutY="520.0" mnemonicParsing="false" onAction="#OnRegistarAction" prefHeight="45.0" prefWidth="167.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;" text="Registrar Almacen" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="35.0">
+            <font>
+                <Font name="Arial" size="16.0" />
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

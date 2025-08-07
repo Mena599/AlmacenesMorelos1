@@ -18,7 +18,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </ImageView>
-            <Label fx:id="lblClientes" contentDisplay="CENTER" prefHeight="76.0" prefWidth="226.0" style="-fx-background-color: #607B8B; -fx-background-radius: 20;" text="clientes " textFill="WHITE">
+            <Label fx:id="lblClientes" contentDisplay="CENTER" prefHeight="76.0" prefWidth="226.0" style="-fx-background-color: #607B8B; -fx-background-radius: 20;" text="Clientes " textFill="WHITE">
                <font>
                   <Font name="Corbel Bold" size="64.0" />
                </font>

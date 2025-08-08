@@ -11,7 +11,7 @@ public class ContratoDAO {
 
     public void insertar(Contrato contrato) {
         String sql = "INSERT INTO CONTRATO (ID_CLIENTE, ID_ALMACEN, TIPO_CONTRATO, FECHA_INICIO, FECHA_FIN, ESTADO) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = ConexionDB.getConexion();
+        try (Connection conn = ConexionDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, contrato.getIdCliente());
             stmt.setInt(2, contrato.getIdAlmacen());
@@ -28,7 +28,7 @@ public class ContratoDAO {
     public List<Contrato> obtenerTodos() {
         List<Contrato> lista = new ArrayList<>();
         String sql = "SELECT * FROM CONTRATO";
-        try (Connection conn = ConexionDB.getConexion();
+        try (Connection conn = ConexionDB.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -50,7 +50,7 @@ public class ContratoDAO {
 
     public void actualizar(Contrato contrato) {
         String sql = "UPDATE CONTRATO SET ESTADO=? WHERE ID_CONTRATO=?";
-        try (Connection conn = ConexionDB.getConexion();
+        try (Connection conn = ConexionDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, contrato.getEstado());
             stmt.setInt(2, contrato.getIdContrato());
@@ -62,7 +62,7 @@ public class ContratoDAO {
 
     public void eliminar(int idContrato) {
         String sql = "DELETE FROM CONTRATO WHERE ID_CONTRATO=?";
-        try (Connection conn = ConexionDB.getConexion();
+        try (Connection conn = ConexionDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idContrato);
             stmt.executeUpdate();

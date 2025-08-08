@@ -5,16 +5,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="595.0" prefWidth="396.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
+<AnchorPane prefHeight="595.0" prefWidth="396.0" style="-fx-background-color: #53798F;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
     <children>
-        <Label layoutX="81.0" layoutY="20.0" style="-fx-text-fill: #607B8B; -fx-font-weight: bold;" text="Registrar Nuevo Almacén">
+        <Label layoutX="81.0" layoutY="20.0" style="-fx-text-fill: #607B8B; -fx-font-weight: bold;" text="Registrar Nuevo Almacén" textFill="WHITE">
             <font>
                 <Font name="Arial" size="22.0" />
             </font>
         </Label>
 
         <!-- Venta/Renta -->
-        <Label layoutX="36.0" layoutY="98.0" text="Venta/Renta:" />
+        <Label layoutX="36.0" layoutY="98.0" text="Venta/Renta:" textFill="WHITE" />
         <MenuButton fx:id="mbTipo" layoutX="142.0" layoutY="94.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona opción">
             <items>
                 <MenuItem fx:id="miVenta" text="Venta" />
@@ -23,7 +23,7 @@
         </MenuButton>
 
         <!-- ID generado automáticamente -->
-        <Label layoutX="38.0" layoutY="152.0" text="ID Almacén:" />
+        <Label layoutX="38.0" layoutY="152.0" text="ID Almacén:" textFill="WHITE" />
         <TextField fx:id="txtIdAlmacen" editable="false" layoutX="141.0" layoutY="139.0" prefWidth="220.0" style="-fx-opacity: 0.8;" />
 
         <!-- Tamaño -->

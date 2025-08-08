@@ -1,27 +1,43 @@
 package org.example.almasenesmorelos1;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class RegistrarAlmacenesController {
 
-    @FXML private MenuButton mbTipo;
-    @FXML private MenuItem miVenta, miRenta;
+    @FXML
+    private MenuButton mbTipo;
+    @FXML
+    private MenuItem miVenta, miRenta;
 
-    @FXML private MenuButton mbTamano;
-    @FXML private MenuItem miGrande, miMediano, miPequeno;
+    @FXML
+    private MenuButton mbTamano;
+    @FXML
+    private MenuItem miGrande, miMediano, miPequeno;
 
-    @FXML private MenuButton mbSede;
-    @FXML private MenuItem miSede1, miSede2, miSede3;
+    @FXML
+    private MenuButton mbSede;
+    @FXML
+    private MenuItem miSede1, miSede2, miSede3;
 
-    @FXML private TextField txtIdAlmacen;
-    @FXML private TextField txtPrecio;
-    @FXML private TextField txtUbicacion;
+    @FXML
+    private TextField txtIdAlmacen;
+    @FXML
+    private TextField txtPrecio;
+    @FXML
+    private TextField txtUbicacion;
 
-    @FXML private Button btnRegistrar;
-
+    @FXML
+    private Button btnRegistrar;
+    @FXML
+    private AlmacenesController almacenesController;
     // Variables para capturar la selección
     private String tipoSeleccionado = null;
     private String tamanoSeleccionado = null;
@@ -172,4 +188,55 @@ public class RegistrarAlmacenesController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+    public void setAlmacenesController(AlmacenesController controller) {
+        this.almacenesController = controller;
+    }
+
+    @FXML
+    private void OnRegistrar(ActionEvent event) {
+        // 1. Validar campos
+        if (!validarCampos()) {
+            return;
+        }
+
+        // 2. Obtener los datos
+        String id = txtIdAlmacen.getText();
+        String tipo = tipoSeleccionado;
+        String tamano = tamanoSeleccionado;
+        String sede = sedeSeleccionada;
+        String precio = txtPrecio.getText();
+        String ubicacion = txtUbicacion.getText();
+
+        try {
+            // 3. Cargar la tarjeta desde FXML (ajusta el nombre del FXML y controller)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TargetasCliente.fxml"));
+            AnchorPane tarjeta = loader.load();
+
+            // 4. Obtener el controller de la tarjeta y pasarle los datos
+            TargetasClienteController controller = loader.getController();
+            controller.setLblNombre("ID: " + id + " - " + tipo);
+            controller.setLblCorreo("Tamaño: " + tamano + " - Sede: " + sede);
+            controller.setLblTelefono("Precio: $" + precio + " - Ubicación: " + ubicacion);
+
+            // 5. Agregar la tarjeta al FlowPane de la vista principal
+            if (almacenesController != null) {
+                almacenesController.getTargetasFlow().getChildren().add(tarjeta);
+            }
+
+            mostrarAlerta("¡Almacén registrado correctamente!");
+
+            // 6. Limpiar y cerrar
+            limpiarFormulario();
+            ((Stage) btnRegistrar.getScene().getWindow()).close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al crear la tarjeta.");
+        }
+    }
 }
+
+
+
+

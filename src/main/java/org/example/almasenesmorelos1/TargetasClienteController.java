@@ -13,7 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TargetasClienteController {
+public class
+TargetasClienteController {
 
     @FXML private Label lblNombre;
     @FXML private Label lblCorreo;

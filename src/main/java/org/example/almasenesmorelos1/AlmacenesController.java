@@ -16,39 +16,42 @@ public class AlmacenesController {
 
     @FXML
     public Button btnAgregar;
+
+    @FXML
+    private FlowPane TargetasFlow; // FlowPane para agregar tarjetas dinámicamente
+
+    // Getter público para que otros controladores accedan al FlowPane
+    public FlowPane getTargetasFlow() {
+        return TargetasFlow;
+    }
+
     @FXML
     private void initialize() {
         btnAgregar.setOnAction(this::abrirFormularioAlmacen);
     }
-    @FXML
-    private FlowPane TargetasFlow;
 
-    public FlowPane getTargetasFlow() {
-        return TargetasFlow;
-    }
+    /**
+     * Método para abrir la ventana de registro de almacén como modal
+     */
     @FXML
     private void abrirFormularioAlmacen(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistrarAlmacenes.fxml"));
             Parent root = loader.load();
 
-            // Obtenemos el controlador de la ventana emergente
+            // Obtenemos el controlador del registro
             RegistrarAlmacenesController registrarController = loader.getController();
+            registrarController.setAlmacenesController(this); // Pasamos referencia
 
-            // Le pasamos la referencia de este mismo controlador (AlmacenesController)
-
-            // Creamos y mostramos la ventana emergente
+            // Abrimos la ventana modal
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Registrar Almacen");
+            stage.setTitle("Registrar Almacén");
             stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-
 }

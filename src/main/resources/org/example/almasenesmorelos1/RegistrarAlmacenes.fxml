@@ -55,7 +55,7 @@
         <TextField fx:id="txtUbicacion" layoutX="141.0" layoutY="355.0" prefWidth="220.0" promptText="Dirección del almacén" />
 
         <!-- Botón registrar -->
-        <Button fx:id="btnRegistrar" layoutX="221.0" layoutY="457.0" style="-fx-background-color: #607B8B; -fx-text-fill: white; -fx-background-radius: 10;" text="Registrar Almacén" />
+        <Button fx:id="btnRegistrar" layoutX="221.0" layoutY="457.0" onAction="#OnRegistrar" style="-fx-background-color: #607B8B; -fx-text-fill: white; -fx-background-radius: 10;" text="Registrar Almacén" />
         <ImageView fitHeight="96.0" fitWidth="121.0" layoutX="62.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

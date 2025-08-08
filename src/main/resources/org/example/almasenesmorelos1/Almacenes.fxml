@@ -58,6 +58,6 @@
             </children>
         </HBox>
 
-        <FlowPane fx:id="TargetasFlow" prefHeight="377.0" prefWidth="893.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
+        <FlowPane fx:id="TargetasFlow"  prefHeight="377.0" prefWidth="893.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
     </children>
 </AnchorPane>

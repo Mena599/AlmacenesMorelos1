@@ -11,18 +11,36 @@ import javafx.stage.Stage;
 public class InicioSuperAdminController {
 
     @FXML
-    private Button btnCliente;
+    public Button btnmirar1;
+    public Button btnmirar2;
 
     @FXML
-    private void abrirVentana2(ActionEvent event) {
+    public void OnMirar1Action(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Clientes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Sedes.fxml"));
             Parent root = loader.load();
 
             // Obtener el stage actual desde el botón que se presionó
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Clientes");
+            stage.setTitle("Sedes");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void OnMiarar2Action(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistareAdmins.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el stage actual desde el botón que se presionó
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Sedes");
             stage.show();
 
         } catch (Exception e) {

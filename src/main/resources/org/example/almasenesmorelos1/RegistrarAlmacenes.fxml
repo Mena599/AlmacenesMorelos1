@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="595.0" prefWidth="396.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
+    <children>
+        <Label layoutX="81.0" layoutY="20.0" style="-fx-text-fill: #607B8B; -fx-font-weight: bold;" text="Registrar Nuevo Almacén">
+            <font>
+                <Font name="Arial" size="22.0" />
+            </font>
+        </Label>
+
+        <!-- Venta/Renta -->
+        <Label layoutX="36.0" layoutY="98.0" text="Venta/Renta:" />
+        <MenuButton fx:id="mbTipo" layoutX="142.0" layoutY="94.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona opción">
+            <items>
+                <MenuItem fx:id="miVenta" text="Venta" />
+                <MenuItem fx:id="miRenta" text="Renta" />
+            </items>
+        </MenuButton>
+
+        <!-- ID generado automáticamente -->
+        <Label layoutX="38.0" layoutY="152.0" text="ID Almacén:" />
+        <TextField fx:id="txtIdAlmacen" editable="false" layoutX="141.0" layoutY="139.0" prefWidth="220.0" style="-fx-opacity: 0.8;" />
+
+        <!-- Tamaño -->
+        <Label layoutX="35.0" layoutY="195.0" text="Tamaño:" />
+        <MenuButton fx:id="mbTamano" layoutX="141.0" layoutY="191.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona tamaño">
+            <items>
+                <MenuItem fx:id="miGrande" text="Grande" />
+                <MenuItem fx:id="miMediano" text="Mediano" />
+                <MenuItem fx:id="miPequeno" text="Pequeño" />
+            </items>
+        </MenuButton>
+
+        <!-- Sede -->
+        <Label layoutX="45.0" layoutY="248.0" text="Sede:" />
+        <MenuButton fx:id="mbSede" layoutX="141.0" layoutY="244.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona sede">
+            <items>
+                <MenuItem fx:id="miSede1" text="Sede 1" />
+                <MenuItem fx:id="miSede2" text="Sede 2" />
+                <MenuItem fx:id="miSede3" text="Sede 3" />
+            </items>
+        </MenuButton>
+
+        <!-- Precio -->
+        <Label layoutX="40.0" layoutY="310.0" text="Precio (MXN):" />
+        <TextField fx:id="txtPrecio" layoutX="141.0" layoutY="306.0" prefWidth="220.0" promptText="Ej: 5000.00" />
+
+        <!-- Ubicación -->
+        <Label layoutX="45.0" layoutY="359.0" text="Ubicación:" />
+        <TextField fx:id="txtUbicacion" layoutX="141.0" layoutY="355.0" prefWidth="220.0" promptText="Dirección del almacén" />
+
+        <!-- Botón registrar -->
+        <Button fx:id="btnRegistrar" layoutX="221.0" layoutY="457.0" onAction="#OnRegistrar" style="-fx-background-color: #607B8B; -fx-text-fill: white; -fx-background-radius: 10;" text="Registrar Almacén" />
+        <ImageView fitHeight="96.0" fitWidth="121.0" layoutX="62.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true" />
+    </children>
+</AnchorPane>

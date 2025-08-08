@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.InicioSuperAdminController">
-   <children>
-      <AnchorPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="org.example.almasenesmorelos1.InicioSuperAdminController">
+
+
+    <children>
+      <ImageView fitHeight="100.0" fitWidth="97.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox layoutX="166.0" layoutY="73.0" prefHeight="250.0" prefWidth="620.0" spacing="20.0" style="-fx-background-color: #607B8B;">
          <children>
-             <Button fx:id="btnCliente" text="Ir a Ventana 2" onAction="#abrirVentana2" />
-         </children>
-      </AnchorPane>
+            <ImageView fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="20.0" top="35.0" />
+               </HBox.margin>
+            </ImageView>
+            <VBox prefHeight="250.0" prefWidth="219.0" spacing="30.0">
+               <children>
+                  <Label text="Sedes de alamcenes " textFill="WHITE">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                   <TextFlow maxWidth="400">
+                       <Text fill="WHITE" style="-fx-font-size: 14px;" text="En este apartado puedes registrar y ver a las sedes para asignar a los almacenes. Toca el botón de mirar para ver." />
+                   </TextFlow>
+
+               </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </VBox>
+            <Button fx:id="btnmirar1" mnemonicParsing="false" onAction="#OnMirar1Action" style="-fx-background-color: #DCDBF5;" text="Mirar">
+               <HBox.margin>
+                  <Insets left="50.0" top="200.0" />
+               </HBox.margin>
+            </Button>
+         </children></HBox>
+      <HBox layoutX="166.0" layoutY="336.0" prefHeight="250.0" prefWidth="620.0" style="-fx-background-color: #607B8B;">
+         <children>
+            <ImageView fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="20.0" top="35.0" />
+               </HBox.margin>
+            </ImageView>
+            <VBox prefHeight="250.0" prefWidth="219.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" prefHeight="35.0" prefWidth="181.0" text="Admin de Sede" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                   <TextFlow maxWidth="400">
+                       <Text fill="WHITE" style="-fx-font-size: 14px;" text="En este apartado  puedes registar a los admins de sedes y asignar a su sede correspondiente. Toca el boton para ver." />
+                   </TextFlow>
+               </children>
+               <padding>
+                  <Insets left="10.0" top="20.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></VBox>
+            <Button fx:id="btnmirar2" mnemonicParsing="false" onAction="#OnMiarar2Action" style="-fx-background-color: #DCDBF5;" text="Mirar">
+               <HBox.margin>
+                  <Insets left="100.0" top="200.0" />
+               </HBox.margin>
+            </Button>
+
+         </children></HBox>
    </children>
 </AnchorPane>

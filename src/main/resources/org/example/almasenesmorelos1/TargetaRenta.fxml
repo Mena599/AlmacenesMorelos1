@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="455.0" prefWidth="296.0" style="-fx-background-color: #607B8B;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.TarjetaVentaController">
+    <children>
+        <VBox layoutX="13.0" layoutY="14.0" prefHeight="200.0" prefWidth="268.0" spacing="30.0">
+            <children>
+                <ImageView fx:id="imgFoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </ImageView>
+
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="70.0">
+                    <children>
+                        <Label text="tamaño" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <!-- valor dinámico -->
+                        <Label fx:id="lblTamano" textFill="WHITE" />
+                    </children>
+                    <padding>
+                        <Insets top="12.0" />
+                    </padding>
+                </HBox>
+
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="70.0">
+                    <children>
+                        <Label text="Ubicasion" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <!-- valor dinámico -->
+                        <Label fx:id="lblUbicacion" textFill="WHITE" />
+                    </children>
+                    <padding>
+                        <Insets top="12.0" />
+                    </padding>
+                </HBox>
+
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="70.0">
+                    <children>
+                        <Label text="Precio" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <!-- valor dinámico -->
+                        <Label fx:id="lblPrecio" textFill="WHITE" />
+                    </children>
+                    <padding>
+                        <Insets top="12.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+
+        <!-- botón con id y handler -->
+        <Button fx:id="btnComprar" layoutX="188.0" layoutY="395.0" mnemonicParsing="false" text="Comprar" onAction="#onComprar" />
+    </children>
+</AnchorPane>

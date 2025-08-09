@@ -1,39 +1,101 @@
 package org.example.almasenesmorelos1;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controlador de la vista "Almacenes".
+ * - Abre el formulario de registro en un modal.
+ * - Se suscribe al AppStore para renderizar las tarjetas del inventario.
+ * - Ya NO recibe tarjetas desde el formulario; todo es reactivo.
+ */
 public class AlmacenesController {
 
     @FXML
     public Button btnAgregar;
-  @FXML
-  public Button btnir;
+    @FXML
+    public Button btnir;
 
     @FXML
-    private FlowPane TargetasFlow; // FlowPane para agregar tarjetas dinámicamente
+    private FlowPane TargetasFlow; // FlowPane donde van las tarjetas del inventario
 
-    // Getter público para que otros controladores accedan al FlowPane
+    // Store central (listas observables)
+    private final AppStore store = AppStore.getInstance();
+
+    // (Opcional) Getter si otros módulos lo siguen usando, pero ya no debería ser necesario.
     public FlowPane getTargetasFlow() {
         return TargetasFlow;
     }
 
     @FXML
     private void initialize() {
+        // 1) Render inicial con lo que ya haya en el store
+        TargetasFlow.getChildren().clear();
+        store.getInventario().forEach(a -> TargetasFlow.getChildren().add(createAlmacenCard(a)));
+
+        // 2) Escuchar cambios en el inventario (reactivo)
+        store.getInventario().addListener((ListChangeListener<Almacen>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    for (Almacen a : change.getAddedSubList()) {
+                        TargetasFlow.getChildren().add(createAlmacenCard(a));
+                    }
+                }
+                if (change.wasRemoved()) {
+                    // Estrategia simple: re-render completo para mantener consistencia
+                    TargetasFlow.getChildren().setAll(
+                            store.getInventario().stream().map(this::createAlmacenCard).toList()
+                    );
+                }
+            }
+        });
+
+        // 3) Botón para abrir el formulario (modal)
         btnAgregar.setOnAction(this::abrirFormularioAlmacen);
     }
 
     /**
-     * Método para abrir la ventana de registro de almacén como modal
+     * Crea una tarjeta simple de Almacén (versión placeholder).
+     * Si tienes un CardAlmacen.fxml propio, dime y lo cargamos con FXMLLoader aquí.
+     */
+    private Node createAlmacenCard(Almacen a) {
+        try {
+            var url = getClass().getResource("/org/example/almasenesmorelos1/TarjetasAlmacen.fxml");
+            if (url == null) throw new IllegalStateException("No se encontró TarjetasAlmacen.fxml");
+
+            FXMLLoader loader = new FXMLLoader(url);
+            Node card = loader.load();
+
+            TargetasAlmacenesController ctrl = loader.getController();
+            ctrl.setData(a, "—"); // <- pásale un texto fijo por ahora
+
+            return card;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Label("Error cargando tarjeta");
+        }
+    }
+
+
+
+
+    /**
+     * Abre el formulario de registro como ventana modal.
+     * Nota: ya NO pasamos referencia de este controlador al formulario.
+     * El formulario, al guardar, llamará al AppStore y eso disparará la actualización aquí.
      */
     @FXML
     private void abrirFormularioAlmacen(ActionEvent event) {
@@ -41,28 +103,28 @@ public class AlmacenesController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistrarAlmacenes.fxml"));
             Parent root = loader.load();
 
-            // Obtenemos el controlador del registro
-            RegistrarAlmacenesController registrarController = loader.getController();
-            registrarController.setAlmacenesController(this); // Pasamos referencia
-
-            // Abrimos la ventana modal
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Registrar Almacén");
             stage.showAndWait();
-
         } catch (IOException e) {
             e.printStackTrace();
+            // Puedes mostrar una alerta si quieres
         }
     }
 
+    /**
+     * Navegación a Venta (revisa el título que pones).
+     * En tu código cargabas Venta.fxml pero ponías "Renta" en el título.
+     */
+    @FXML
     public void OnirAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Venta.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) btnir.getScene().getWindow();
         stage.setScene(scene);
-        stage.setTitle("Renta");
-
+        stage.setTitle("Venta"); // <-- corrige el título si es Venta
+        stage.show();
     }
 }

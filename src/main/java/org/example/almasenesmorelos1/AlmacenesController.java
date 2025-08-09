@@ -16,6 +16,8 @@ public class AlmacenesController {
 
     @FXML
     public Button btnAgregar;
+  @FXML
+  public Button btnir;
 
     @FXML
     private FlowPane TargetasFlow; // FlowPane para agregar tarjetas dinámicamente
@@ -53,5 +55,14 @@ public class AlmacenesController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void OnirAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Venta.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnir.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Renta");
+
     }
 }

@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -120,7 +119,7 @@ public class AlmacenesController {
      */
     @FXML
     public void OnirAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Venta.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Renta.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) btnir.getScene().getWindow();
         stage.setScene(scene);

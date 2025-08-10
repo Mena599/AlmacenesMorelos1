@@ -1,140 +1,90 @@
 package org.example.almasenesmorelos1;
 
-import javafx.event.ActionEvent;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+
+import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.text.NumberFormat;
 
 public class VentaController {
+    @FXML public Button btnInicio;
+    @FXML public Button btnCompra;
+    @FXML public Button btnRenta;
+    @FXML public Button btnRegresar;
+    @FXML public FlowPane flowpaneventa;
+
+    private final AppStore store = AppStore.getInstance();
+    private final NumberFormat money = NumberFormat.getCurrencyInstance();
 
     @FXML
-    private TextField searchField;
-
-    // Botones de la barra lateral para navegación
-    @FXML
-    private Button inicioButton;
-    @FXML
-    private Button almacenesButton;
-    @FXML
-    private Button logoutButton;
-
-    // Tarjetas de almacenes y sus botones de "Comprar"
-    @FXML
-    private VBox card1, card2, card3, card4;
-    @FXML
-    private Button buyButton1, buyButton2, buyButton3, buyButton4;
-
-    /**
-     * Este método se inicializa al cargar la vista FXML.
-     */
-    @FXML
-    public void initialize() {
-        System.out.println("VentaController inicializado.");
+    private void initialize() {
+        render(); // pinta lo que ya haya
+        // Cuando se agregue una publicación de VENTA, re-render
+        store.getPublicacionesVenta().addListener((ListChangeListener<Publicacion>) c -> render());
     }
 
-    // Métodos para la barra de navegación superior
-
-    @FXML
-    private void handleSearchAction(MouseEvent event) {
-        String searchText = searchField.getText();
-        System.out.println("Buscando: " + searchText);
+    private void render() {
+        flowpaneventa.getChildren().setAll(
+                store.getPublicacionesVenta().stream()
+                        .map(this::crearTarjetaVenta)
+                        .toList()
+        );
     }
 
     @FXML
-    private void handleProfileClick(MouseEvent event) {
-        System.out.println("Ícono de perfil clicado.");
+    private void OnInicioAction(javafx.event.ActionEvent event) throws java.io.IOException {
+
     }
 
     @FXML
-    private void handleNotificationsClick(MouseEvent event) {
-        System.out.println("Ícono de notificaciones clicado.");
+    private void OnCompraAction(javafx.event.ActionEvent event) throws java.io.IOException {
+
     }
 
-    // Métodos de navegación de la barra lateral
-
-    /**
-     * Navega a la vista de Inicio.fxml
-     */
     @FXML
-    private void handleInicioAction(ActionEvent event) {
+    private void OnRentaAction(javafx.event.ActionEvent event) throws java.io.IOException {
+
+    }
+
+    @FXML
+    private void onRegresarClick(javafx.event.ActionEvent event) throws java.io.IOException {
+
+    }
+
+
+
+    private Node crearTarjetaVenta(Publicacion p) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            System.out.println("Navegando a Inicio.fxml");
+            var url = getClass().getResource("/org/example/almasenesmorelos1/TarjetaVenta.fxml");
+            if (url == null) throw new IllegalStateException("Falta TarjetasVenta.fxml en resources/org/example/almasenesmorelos1/");
+            FXMLLoader fx = new FXMLLoader(url);
+            Node card = fx.load();
+
+            TarjetaVentaController ctrl = fx.getController();
+            ctrl.setData(p, money); // ← pasa los datos a la tarjeta
+
+            return card;
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista Inicio.fxml: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Navega a la vista de Renta.fxml (Almacenes).
-     */
-    @FXML
-    private void handleAlmacenesAction(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Renta.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            System.out.println("Navegando a Renta.fxml");
-        } catch (IOException e) {
-            System.err.println("Error al cargar la vista Renta.fxml: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Cierra la sesión y navega a la vista de Login.fxml.
-     */
-    @FXML
-    private void handleLogoutAction(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            System.out.println("Cerrando sesión y navegando a Login.fxml");
-        } catch (IOException e) {
-            System.err.println("Error al cargar la vista Login.fxml: " + e.getMessage());
-        }
-    }
-
-    // Métodos para los botones de compra
-
-    /**
-     * Maneja la acción del botón "Comprar" en cualquiera de las tarjetas.
-     */
-    @FXML
-    private void handleBuyAction(ActionEvent event) {
-        Button sourceButton = (Button) event.getSource();
-        String buttonId = sourceButton.getId();
-
-        System.out.println("Botón 'Comprar' con ID " + buttonId + " presionado.");
-
-        // Lógica de compra basada en el ID del botón
-        if (buttonId.equals("buyButton1")) {
-            System.out.println("Comprando almacén 1.");
-        } else if (buttonId.equals("buyButton2")) {
-            System.out.println("Comprando almacén 2.");
-        } else if (buttonId.equals("buyButton3")) {
-            System.out.println("Comprando almacén 3.");
-        } else if (buttonId.equals("buyButton4")) {
-            System.out.println("Comprando almacén 4.");
+            e.printStackTrace();
+            // Fallback simple si algo falla cargando la tarjeta
+            var a = p.getAlmacen();
+            VBox fallback = new VBox(6);
+            fallback.setStyle("-fx-background-color: #F7F9FF; -fx-background-radius: 12; -fx-padding: 12;");
+            fallback.getChildren().addAll(
+                    new Label("VENTA • " + a.getNombre()),
+                    new Label("Tamaño: " + a.getTamanoM2() + " m²"),
+                    new Label("Ubicación: " + a.getUbicacion()),
+                    new Label("Precio: " + money.format(p.getPrecio()))
+            );
+            fallback.setPrefWidth(240);
+            return fallback;
         }
     }
 }

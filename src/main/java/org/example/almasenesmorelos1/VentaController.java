@@ -42,25 +42,31 @@ public class VentaController {
 
     @FXML
     private void OnInicioAction(javafx.event.ActionEvent event) throws java.io.IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnCompra.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("inicio");
 
     }
 
     @FXML
     private void OnCompraAction(javafx.event.ActionEvent event) throws java.io.IOException {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Venta.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnCompra.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Compra");
     }
 
     @FXML
     private void OnRentaAction(javafx.event.ActionEvent event) throws java.io.IOException {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Renta.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnCompra.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Renta");
     }
-
-    @FXML
-    private void onRegresarClick(javafx.event.ActionEvent event) throws java.io.IOException {
-
-    }
-
-
 
     private Node crearTarjetaVenta(Publicacion p) {
         try {

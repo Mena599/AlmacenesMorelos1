@@ -6,12 +6,40 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="org.example.almasenesmorelos1.InicioSuperAdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.InicioSuperAdminController">
 
 
     <children>
-      <ImageView fitHeight="100.0" fitWidth="97.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-      <HBox layoutX="166.0" layoutY="73.0" prefHeight="250.0" prefWidth="620.0" spacing="20.0" style="-fx-background-color: #607B8B;">
+        <AnchorPane prefHeight="80.0" prefWidth="1000.0" AnchorPane.topAnchor="10.0">
+            <!-- Logo -->
+            <ImageView fx:id="imgLogo" fitHeight="68.0" fitWidth="91.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="20.0">
+                <image>
+                    <Image url="@../../../img/Logo.png" />
+                </image>
+            </ImageView>
+
+            <!-- Título centrado -->
+            <Label fx:id="lblClientes" alignment="CENTER" layoutY="4.0" prefHeight="72.0" prefWidth="335.0" style="-fx-background-color: #607B8B; -fx-background-radius: 20;" text="SuperAdmin" textFill="WHITE" AnchorPane.leftAnchor="350.0">
+                <font>
+                    <Font name="Corbel Bold" size="48.0" />
+                </font>
+            </Label>
+
+            <!-- Icono usuario -->
+            <ImageView fx:id="imgUser" fitHeight="32.0" fitWidth="34.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="80.0">
+                <image>
+                    <Image url="@../../../img/User.png" />
+                </image>
+            </ImageView>
+
+            <!-- Icono logout -->
+            <ImageView fx:id="imgLongOut" fitHeight="32.0" fitWidth="34.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0">
+                <image>
+                    <Image url="@../../../img/log-out.png" />
+                </image>
+            </ImageView>
+        </AnchorPane>
+      <HBox layoutX="130.0" layoutY="102.0" prefHeight="237.0" prefWidth="640.0" spacing="20.0" style="-fx-background-color: #607B8B;">
          <children>
             <ImageView fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -43,7 +71,7 @@
                </HBox.margin>
             </Button>
          </children></HBox>
-      <HBox layoutX="166.0" layoutY="336.0" prefHeight="250.0" prefWidth="620.0" style="-fx-background-color: #607B8B;">
+      <HBox layoutX="130.0" layoutY="349.0" prefHeight="237.0" prefWidth="640.0" style="-fx-background-color: #607B8B;">
          <children>
             <ImageView fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>

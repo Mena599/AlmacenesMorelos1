@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -30,13 +31,13 @@ public class SedeCardController {
     private Button deleteButton;
 
     private SedesController sedesController;
-    private HBox parentContainer;
+    private FlowPane parentContainer; // Cambia HBox a FlowPane
 
     public void setSedesController(SedesController sedesController) {
         this.sedesController = sedesController;
     }
 
-    public void setParentContainer(HBox parentContainer) {
+    public void setParentContainer(FlowPane parentContainer) {
         this.parentContainer = parentContainer;
     }
 

@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -25,13 +26,16 @@ public class SedesController {
     private ImageView logoutIcon;
 
     @FXML
+    private ImageView logoImage; // Asegúrate de que tu logo tenga este fx:id
+
+    @FXML
     private Button addButton;
 
     @FXML
     private VBox sedeListContainer; // Contenedor para los botones de sedes
 
     @FXML
-    private HBox mainCardContainer; // Contenedor para las tarjetas de sedes
+    private FlowPane mainCardContainer; // Contenedor para las tarjetas de sedes
 
     @FXML
     private void handleAddButtonAction(ActionEvent event) {
@@ -72,7 +76,7 @@ public class SedesController {
             newSedeButton.setStyle("-fx-background-color: #7d8f9e; -fx-background-radius: 5;");
             newSedeButton.setTextFill(javafx.scene.paint.Color.WHITE);
             newSedeButton.setFont(new javafx.scene.text.Font(18.0));
-            javafx.scene.layout.VBox.setMargin(newSedeButton, new javafx.geometry.Insets(10.0, 20.0, 0, 20.0));
+            VBox.setMargin(newSedeButton, new javafx.geometry.Insets(10.0, 20.0, 0, 20.0));
             newSedeButton.setOnAction(this::handleSedeButton);
 
             sedeListContainer.getChildren().add(newSedeButton);
@@ -102,33 +106,31 @@ public class SedesController {
         showAlert(Alert.AlertType.INFORMATION, "Información de Usuario", "Se ha hecho clic en el icono de usuario.");
     }
 
+    // Nuevo método para manejar el clic en el logo
     @FXML
-    private void handleLogoutIconAction(MouseEvent event) {
+    private void handleLogoAction(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConfirmarCerrarSesion.fxml"));
-            Parent root = loader.load();
-
-            ConfirmarCerrarSesionController controller = loader.getController();
-
-            Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.setTitle("Confirmar Cerrar Sesión");
-            dialog.setScene(new Scene(root));
-            dialog.showAndWait();
-
-            if (controller.isConfirmado()) {
-                Stage currentStage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
-                currentStage.close();
-
-                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
-                Parent loginRoot = loginLoader.load();
-                Stage loginStage = new Stage();
-                loginStage.setScene(new Scene(loginRoot));
-                loginStage.show();
-            }
+            Parent root = FXMLLoader.load(getClass().getResource("InicioSuperAdmin.fxml"));
+            Stage currentStage = (Stage) logoImage.getScene().getWindow();
+            currentStage.setScene(new Scene(root));
+            currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la ventana de confirmación.");
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de Inicio.");
+        }
+    }
+
+    // Nuevo método para manejar el clic en el ícono de cerrar sesión
+    @FXML
+    private void handleLogoutAction(MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Stage currentStage = (Stage) logoutIcon.getScene().getWindow();
+            currentStage.setScene(new Scene(root));
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de Login.");
         }
     }
 

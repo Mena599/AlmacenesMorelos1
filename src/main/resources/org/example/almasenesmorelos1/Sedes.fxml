@@ -10,7 +10,7 @@
     <children>
         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="1180.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
             <children>
-                <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="logoImage" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#handleLogoAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../img/Logo.png" />
                     </image>
@@ -35,7 +35,7 @@
                         <Insets right="10.0" />
                     </HBox.margin>
                 </ImageView>
-                <ImageView fx:id="logoutIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#handleLogoutIconAction" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="logoutIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#handleLogoutAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../img/log-out.png" />
                     </image>
@@ -64,11 +64,6 @@
                 <Font size="14.0" />
             </font>
         </Button>
-
-        <HBox fx:id="mainCardContainer" alignment="CENTER" layoutX="331.0" layoutY="159.0" prefHeight="400.0" prefWidth="750.0" spacing="20.0" >
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets></HBox>
 
         <HBox alignment="CENTER" layoutX="10.0" layoutY="620.0" prefHeight="70.0" prefWidth="1180.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
             <children>
@@ -100,5 +95,6 @@
                 </ImageView>
             </children>
         </HBox>
+        <FlowPane fx:id="mainCardContainer" layoutX="367.0" layoutY="143.0" prefHeight="437.0" prefWidth="716.0" />
     </children>
 </AnchorPane>

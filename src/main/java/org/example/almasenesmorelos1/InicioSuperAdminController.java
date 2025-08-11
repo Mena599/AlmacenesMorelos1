@@ -34,13 +34,13 @@ public class InicioSuperAdminController {
     @FXML
     public void OnMiarar2Action(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistareAdmins.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminSede.fxml"));
             Parent root = loader.load();
 
             // Obtener el stage actual desde el botón que se presionó
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Sedes");
+            stage.setTitle("Administradores de sede");
             stage.show();
 
         } catch (Exception e) {

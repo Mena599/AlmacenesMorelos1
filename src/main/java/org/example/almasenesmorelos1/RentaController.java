@@ -4,6 +4,7 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -15,7 +16,9 @@ import java.io.IOException;
 import java.text.NumberFormat;
 
 public class RentaController {
-
+    @FXML public Button btnInicio;
+    @FXML public Button btnCompra;
+    @FXML public Button btnRenta;
     @FXML private FlowPane flowpaneRenta;
 
     private final AppStore store = AppStore.getInstance();
@@ -37,24 +40,30 @@ public class RentaController {
 
     @FXML
     private void OnInicioAction(javafx.event.ActionEvent event) throws java.io.IOException {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnCompra.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("inicio");
     }
 
     @FXML
     private void OnCompraAction(javafx.event.ActionEvent event) throws java.io.IOException {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Venta.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnCompra.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Compra");
     }
 
     @FXML
     private void OnRentaAction(javafx.event.ActionEvent event) throws java.io.IOException {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Renta.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) btnRenta.getScene().getWindow(); // obtener ventana actual
+        stage.setScene(scene);
+        stage.setTitle("Renta");
     }
-
-    @FXML
-    private void onRegresarClick(javafx.event.ActionEvent event) throws java.io.IOException {
-
-    }
-
     private Node crearTarjetaRenta(Publicacion p) {
         try {
             var url = getClass().getResource("/org/example/almasenesmorelos1/TargetaRenta.fxml"); // usa tu nombre exacto

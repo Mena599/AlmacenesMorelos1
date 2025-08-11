@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:controller="org.example.almasenesmorelos1.SedesController"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #f7f3e9;"
-            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #f7f3e9;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.SedesController">
     <children>
         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="1180.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
             <children>
@@ -36,7 +27,7 @@
                         </Text>
                     </children>
                 </StackPane>
-                <ImageView fx:id="userIcon" onMouseClicked="#handleUserIconAction" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#handleUserIconAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../img/user.png" />
                     </image>
@@ -44,7 +35,7 @@
                         <Insets right="10.0" />
                     </HBox.margin>
                 </ImageView>
-                <ImageView fx:id="logoutIcon" onMouseClicked="#handleLogoutIconAction" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="logoutIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#handleLogoutIconAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../img/log-out.png" />
                     </image>
@@ -55,9 +46,9 @@
             </children>
         </HBox>
 
-        <VBox layoutX="10.0" layoutY="100.0" prefHeight="480.0" prefWidth="250.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
+        <VBox fx:id="sedeListContainer" layoutX="10.0" layoutY="100.0" prefHeight="480.0" prefWidth="250.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
             <children>
-                <Label text="Sedes" textFill="WHITE">
+                <Label prefHeight="55.0" prefWidth="174.0" text="          Sedes" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -65,151 +56,19 @@
                         <Insets bottom="10.0" left="20.0" top="10.0" />
                     </padding>
                 </Label>
-                <Button fx:id="cuernavacaButton" mnemonicParsing="false" onAction="#handleSedeButton" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="Cuernavaca" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button fx:id="temixcoButton" mnemonicParsing="false" onAction="#handleSedeButton" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="Temixco" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button fx:id="eZapataButton" mnemonicParsing="false" onAction="#handleSedeButton" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: #7d8f9e; -fx-background-radius: 5;" text="E. Zapata" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
             </children>
         </VBox>
 
-        <Button fx:id="addButton" onAction="#handleAddButtonAction" layoutX="1110.0" layoutY="110.0" mnemonicParsing="false" style="-fx-background-color: #4a637c; -fx-background-radius: 5;" text="+ Añadir" textFill="WHITE">
+        <Button fx:id="addButton" layoutX="1110.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleAddButtonAction" style="-fx-background-color: #4a637c; -fx-background-radius: 5;" text="+ Añadir" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
 
-        <HBox alignment="CENTER" layoutX="270.0" layoutY="160.0" prefHeight="400.0" prefWidth="910.0" spacing="20.0">
-            <VBox alignment="TOP_CENTER" prefHeight="380.0" prefWidth="250.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10; -fx-border-color: #4a637c; -fx-border-width: 2; -fx-border-radius: 10;">
-                <children>
-                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../../img/worehouse.jpg" />
-                        </image>
-                        <VBox.margin>
-                            <Insets top="10.0" />
-                        </VBox.margin>
-                    </ImageView>
-                    <Label text="MXN $15,000.00">
-                        <font>
-                            <Font name="System Bold" size="18.0" />
-                        </font>
-                        <VBox.margin>
-                            <Insets top="10.0" />
-                        </VBox.margin>
-                    </Label>
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;"
-                            onAction="#handleDeleteButtonAction">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                        <VBox.margin>
-                            <Insets top="20.0" />
-                        </VBox.margin>
-                        <graphic>
-                            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                <image>
-                                    <Image url="@../../../img/filled-trash.png" />
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </children>
-            </VBox>
-
-            <VBox alignment="TOP_CENTER" prefHeight="380.0" prefWidth="250.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10; -fx-border-color: #4a637c; -fx-border-width: 2; -fx-border-radius: 10;">
-                <children>
-                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../../img/worehouse.jpg" />
-                        </image>
-                        <VBox.margin>
-                            <Insets top="10.0" />
-                        </VBox.margin>
-                    </ImageView>
-                    <Label text="MXN $15,000.00">
-                        <font>
-                            <Font name="System Bold" size="18.0" />
-                        </font>
-                        <VBox.margin>
-                            <Insets top="10.0" />
-                        </VBox.margin>
-                    </Label>
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;"
-                            onAction="#handleDeleteButtonAction">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                        <VBox.margin>
-                            <Insets top="20.0" />
-                        </VBox.margin>
-                        <graphic>
-                            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                <image>
-                                    <Image url="@../../../img/filled-trash.png" />
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </children>
-            </VBox>
-
-            <VBox alignment="TOP_CENTER" prefHeight="380.0" prefWidth="250.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10; -fx-border-color: #4a637c; -fx-border-width: 2; -fx-border-radius: 10;">
-                <children>
-                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../../img/worehouse.jpg" />
-                        </image>
-                        <VBox.margin>
-                            <Insets top="10.0" />
-                        </VBox.margin>
-                    </ImageView>
-                    <Label text="MXN $15,000.00">
-                        <font>
-                            <Font name="System Bold" size="18.0" />
-                        </font>
-                        <VBox.margin>
-                            <Insets top="10.0" />
-                        </VBox.margin>
-                    </Label>
-                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #304850; -fx-background-radius: 5;"
-                            onAction="#handleDeleteButtonAction">
-                        <font>
-                            <Font size="18.0" />
-                        </font>
-                        <VBox.margin>
-                            <Insets top="20.0" />
-                        </VBox.margin>
-                        <graphic>
-                            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                <image>
-                                    <Image url="@../../../img/filled-trash.png" />
-                                </image>
-                            </ImageView>
-                        </graphic>
-                    </Button>
-                </children>
-            </VBox>
-        </HBox>
+        <HBox fx:id="mainCardContainer" alignment="CENTER" layoutX="331.0" layoutY="159.0" prefHeight="400.0" prefWidth="750.0" spacing="20.0" >
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></HBox>
 
         <HBox alignment="CENTER" layoutX="10.0" layoutY="620.0" prefHeight="70.0" prefWidth="1180.0" style="-fx-background-color: #4a637c; -fx-background-radius: 10;">
             <children>

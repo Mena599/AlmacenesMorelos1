@@ -4,9 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import java.io.IOException;
 
 public class InicioController {
@@ -53,11 +53,11 @@ public class InicioController {
 
     @FXML
     private void OnMirarAction() throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Compra.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Venta.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = (Stage) btnMirar.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Compra");
+            stage.setTitle("Venta");
     }
 
     @FXML
@@ -68,15 +68,32 @@ public class InicioController {
         stage.setScene(scene);
         stage.setTitle("Renta");
     }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    public void handleLogoutIconAction(javafx.scene.input.MouseEvent mouseEvent) {
 
- //Menu superior
-    @FXML
-    private void onRegresarClick() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) btnInicio.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("inicio");
+        try {
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            // Cargar la ventana de inicio
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
+            Parent root = loader.load();
+
+            Stage inicioStage = new Stage();
+            inicioStage.setScene(new Scene(root));
+            inicioStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la página de inicio");
+        }
+
     }
 
 }

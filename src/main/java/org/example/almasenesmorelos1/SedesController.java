@@ -7,147 +7,131 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class SedesController {
 
-    @FXML private AnchorPane rootPane;
-    @FXML private ImageView userIcon;
-    @FXML private ImageView logoutIcon;
-    @FXML private Button cuernavacaButton;
-    @FXML private Button temixcoButton;
-    @FXML private Button eZapataButton;
-    @FXML private Button addButton;
-    @FXML private HBox contentHBox; // Agregado para referenciar el HBox con los almacenes
+    @FXML
+    private ImageView userIcon;
 
     @FXML
-    private void initialize() {
-        // Lógica de inicialización
+    private ImageView logoutIcon;
 
-    }
-
-    /**
-     * Maneja los clics en los botones de sede (Cuernavaca, Temixco, etc.).
-     *
-     */
     @FXML
-    private void handleSedeButton(ActionEvent event) {
-        Button clickedButton = (Button) event.getSource();
-        String sedeName = clickedButton.getText();
+    private Button addButton;
 
-        System.out.println("Navegando a la vista de almacenes de: " + sedeName);
+    @FXML
+    private VBox sedeListContainer; // Contenedor para los botones de sedes
 
-        // Aquí se implementa el cambio de vista, por ejemplo, cargando la vista de "Almacenes"
-        try {
-            Parent almacenesView = FXMLLoader.load(getClass().getResource("AlmacenesView.fxml"));
-            Scene scene = rootPane.getScene(); // Obtiene la escena actual
-            scene.setRoot(almacenesView); // Reemplaza la raíz de la escena con la nueva vista
+    @FXML
+    private HBox mainCardContainer; // Contenedor para las tarjetas de sedes
 
-            // AlmacenesController controller = fxmlLoader.getController();
-            // controller.setSede(sedeName);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error de Navegación", "No se pudo cargar la vista de Almacenes.");
-        }
-    }
-
-    /**
-     * Maneja el clic en el botón de "+ Añadir".
-     * Abre un popup con el formulario de registro de sedes.
-     */
     @FXML
     private void handleAddButtonAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegistrarSedes.fxml"));
-            Parent parent = fxmlLoader.load();
+            Parent root = fxmlLoader.load();
+
+            RegistrarSedesController registrarController = fxmlLoader.getController();
+            registrarController.setSedesController(this);
 
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Registrar Nueva Sede");
-            stage.setScene(new Scene(parent));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
             stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar el formulario de registro de sedes.");
+            showAlert(Alert.AlertType.ERROR, "Error al cargar formulario", "No se pudo cargar el formulario de registro.");
         }
     }
 
-    /**
-     * Maneja el clic en los botones de eliminar (los de la papelera).
-     */
+    public void addSedeToView(String idSede, String municipio, String idAdmi, String telefono, String fechaRegistro) {
+        try {
+            FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("SedeCard.fxml"));
+            VBox sedeCard = cardLoader.load();
+
+            SedeCardController cardController = cardLoader.getController();
+            cardController.setSedeData(idSede, municipio, telefono);
+            cardController.setSedesController(this);
+            cardController.setParentContainer(mainCardContainer);
+
+            mainCardContainer.getChildren().add(sedeCard);
+
+            Button newSedeButton = new Button(municipio);
+            newSedeButton.setPrefHeight(40.0);
+            newSedeButton.setPrefWidth(210.0);
+            newSedeButton.setStyle("-fx-background-color: #7d8f9e; -fx-background-radius: 5;");
+            newSedeButton.setTextFill(javafx.scene.paint.Color.WHITE);
+            newSedeButton.setFont(new javafx.scene.text.Font(18.0));
+            javafx.scene.layout.VBox.setMargin(newSedeButton, new javafx.geometry.Insets(10.0, 20.0, 0, 20.0));
+            newSedeButton.setOnAction(this::handleSedeButton);
+
+            sedeListContainer.getChildren().add(newSedeButton);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error al crear tarjeta", "No se pudo crear la tarjeta de la sede.");
+        }
+    }
+
     @FXML
-    private void handleDeleteButtonAction(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar Eliminación");
-        alert.setHeaderText(null);
-        alert.setContentText("¿Estás seguro de que quieres eliminar este almacén?");
+    private void handleSedeButton(ActionEvent event) {
+        Button clickedButton = (Button) event.getSource();
+        String sedeName = clickedButton.getText();
+        showAlert(Alert.AlertType.INFORMATION, "Navegación", "Has seleccionado la sede de " + sedeName);
+    }
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            System.out.println("Almacén eliminado.");
+    public void removeSedeCard(Parent card) {
+        if (mainCardContainer.getChildren().contains(card)) {
+            mainCardContainer.getChildren().remove(card);
+            showAlert(Alert.AlertType.INFORMATION, "Eliminación Exitosa", "La sede ha sido eliminada.");
         }
     }
 
-    /**
-     * Maneja el clic en el ícono de usuario.
-     * Abre un popup con el perfil del administrador.
-     */
     @FXML
     private void handleUserIconAction(MouseEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PerfilUsuarioPopup.fxml"));
-            Parent parent = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Perfil del Usuario");
-            stage.setScene(new Scene(parent));
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar el popup de perfil.");
-        }
+        showAlert(Alert.AlertType.INFORMATION, "Información de Usuario", "Se ha hecho clic en el icono de usuario.");
     }
 
-    /**
-     * Maneja el clic en el ícono de cerrar sesión.
-     * Muestra una alerta de confirmación y regresa a la pantalla de login.
-     */
     @FXML
     private void handleLogoutIconAction(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar Cierre de Sesión");
-        alert.setHeaderText(null);
-        alert.setContentText("¿Estás seguro de que quieres cerrar sesión?");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConfirmarCerrarSesion.fxml"));
+            Parent root = loader.load();
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                Parent loginView = FXMLLoader.load(getClass().getResource("Login.fxml"));
-                Scene scene = logoutIcon.getScene();
-                scene.setRoot(loginView);
-            } catch (IOException e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de login.");
+            ConfirmarCerrarSesionController controller = loader.getController();
+
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Confirmar Cerrar Sesión");
+            dialog.setScene(new Scene(root));
+            dialog.showAndWait();
+
+            if (controller.isConfirmado()) {
+                Stage currentStage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
+                Parent loginRoot = loginLoader.load();
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(loginRoot));
+                loginStage.show();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la ventana de confirmación.");
         }
     }
 
-    /**
-     * Método auxiliar para mostrar alertas.
-     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

@@ -17,6 +17,14 @@ public class RegistrarSedesController {
     @FXML private CheckBox terminosCheckBox;
     @FXML private Button registrarButton;
 
+    // Referencia al controlador de la ventana principal
+    private SedesController sedesController;
+
+    // Método para establecer la referencia del SedesController
+    public void setSedesController(SedesController sedesController) {
+        this.sedesController = sedesController;
+    }
+
     @FXML
     private void handleRegistrarButtonAction() {
         if (validateInput()) {
@@ -27,12 +35,10 @@ public class RegistrarSedesController {
             String telefono = telefonoField.getText();
             String fechaRegistro = diaField.getText() + "/" + mesField.getText() + "/" + anioField.getText();
 
-            System.out.println("Sede Registrada:");
-            System.out.println("ID Sede: " + idSede);
-            System.out.println("Municipio: " + municipio);
-            System.out.println("ID Admin: " + idAdmi);
-            System.out.println("Teléfono: " + telefono);
-            System.out.println("Fecha de Registro: " + fechaRegistro);
+            // Llama al método del SedesController para agregar la nueva sede a la vista
+            if (sedesController != null) {
+                sedesController.addSedeToView(idSede, municipio, idAdmi, telefono, fechaRegistro);
+            }
 
             showAlert(Alert.AlertType.INFORMATION, "Registro Exitoso", "La nueva sede ha sido registrada correctamente.");
 
@@ -45,9 +51,7 @@ public class RegistrarSedesController {
         }
     }
 
-    /**
-     * Método para validar los campos del formulario.
-     */
+    // ... métodos validateInput() y showAlert() sin cambios ...
     private boolean validateInput() {
         String errorMessage = "";
 
@@ -81,9 +85,6 @@ public class RegistrarSedesController {
         }
     }
 
-    /**
-     * Método auxiliar para mostrar alertas.
-     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

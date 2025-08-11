@@ -8,8 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-
-import java.awt.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.NumberFormat;
 
@@ -87,4 +89,32 @@ public class VentaController {
             return fallback;
         }
     }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    public void handleLogoutIconAction(javafx.scene.input.MouseEvent mouseEvent) {
+
+        try {
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            // Cargar la ventana de inicio
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
+            Parent root = loader.load();
+
+            Stage inicioStage = new Stage();
+            inicioStage.setScene(new Scene(root));
+            inicioStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la página de inicio");
+        }
+    }
+
 }

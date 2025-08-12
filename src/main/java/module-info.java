@@ -8,10 +8,6 @@ module org.example.almasenesmorelos1 {
     requires java.desktop;
     requires java.sql;
     requires jbcrypt;
-<<<<<<< Updated upstream
-=======
-    // requires ojdbc11;  <-- Quitar esta línea
->>>>>>> Stashed changes
 
     opens org.example.almasenesmorelos1 to javafx.fxml;
     exports org.example.almasenesmorelos1;

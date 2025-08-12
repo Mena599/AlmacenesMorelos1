@@ -3,21 +3,50 @@ package org.example.almasenesmorelos1.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConexionDB {
+    private static Connection conexion;
 
-    // Ruta del wallet
-    private static final String UBICACION_WALLET = "C:\\Users\\jenif\\AlmacenesMorelos1\\src\\main";
+    public static Connection getConexion() throws SQLException {
+        if (conexion == null || conexion.isClosed()) {
+            try {
+                Class.forName("oracle.jdbc.OracleDriver");
+                String ruta = "C:/Users/jenif/AlmacenesMorelos1/src/main/resources/org/example/almasenesmorelos1/Wallet_Integradora";
+                String alias = "integradora_high";
+                String url = "jdbc:oracle:thin:@" + alias + "?tns_ADMIN=" + ruta;
 
-    // URL del JDBC con alias TNS
-    private static final String JDBC_URL = "jdbc:oracle:thin:@integradora_high";
+                Properties props = new Properties();
+                props.setProperty("user", "ADMIN");
+                props.setProperty("password", "Dua.Lipa.2005");
 
-    // Usuario y contraseña
-    private static final String USER = "Admin";
-    private static final String PASS = "Dua.Lipa.2005";
+                conexion = DriverManager.getConnection(url, props);
+                System.out.println("✅ Conexión exitosa a la base de datos Oracle");
+            } catch (Exception e) {
+                System.out.println("❌ Error al conectar a la base de datos: ");
+                e.printStackTrace();
+            }
+        }
+        return conexion;
+    }
 
+    // Método para compatibilidad con código que use getConnection()
     public static Connection getConnection() throws SQLException {
-        System.setProperty("oracle.net.tns_admin", UBICACION_WALLET);
-        return DriverManager.getConnection(JDBC_URL, USER, PASS);
+        return getConexion();
+    }
+
+    // Método main para probar conexión desde consola o IDE
+    public static void main(String[] args) {
+        try {
+            Connection conn = getConnection();
+            if (conn != null) {
+                System.out.println("🔍 Prueba de conexión completada correctamente");
+                conn.close();
+            } else {
+                System.out.println("❌ No se pudo establecer conexión");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

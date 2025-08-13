@@ -5,8 +5,6 @@ import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.almasenesmorelos1.daos.UserDAO;
-import org.example.almasenesmorelos1.model.User;
 import org.example.almasenesmorelos1.utils.PasswordUtils;
 
 import java.io.IOException;

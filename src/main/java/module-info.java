@@ -9,7 +9,7 @@ module org.example.almasenesmorelos1 {
     requires java.sql;
     requires jbcrypt;
 
-
+    requires java.sql;
     opens org.example.almasenesmorelos1 to javafx.fxml;
     exports org.example.almasenesmorelos1;
     exports org.example.almasenesmorelos1.daos;

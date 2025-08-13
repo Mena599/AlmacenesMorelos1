@@ -1,61 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="595.0" prefWidth="396.0" style="-fx-background-color: #53798F;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
+<AnchorPane fx:id="rootPane" prefHeight="600.0" prefWidth="421.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAdminController">
     <children>
-        <Label layoutX="81.0" layoutY="20.0" style="-fx-text-fill: #607B8B; -fx-font-weight: bold;" text="Registrar Nuevo Almacén" textFill="WHITE">
+        <!-- Título del formulario -->
+        <Label fx:id="lblTitulo" layoutX="88.0" layoutY="27.0" prefHeight="35.0" prefWidth="263.0" style="-fx-text-fill: #87A1B1; -fx-font-weight: bold;" text="Registro Admin Sede" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="70.0">
             <font>
-                <Font name="Arial" size="22.0" />
+                <Font name="Arial" size="24.0" />
             </font>
         </Label>
 
-        <!-- Venta/Renta -->
-        <Label layoutX="36.0" layoutY="98.0" text="Venta/Renta:" textFill="WHITE" />
-        <MenuButton fx:id="mbTipo" layoutX="142.0" layoutY="94.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona opción">
-            <items>
-                <MenuItem fx:id="miVenta" text="Venta" />
-                <MenuItem fx:id="miRenta" text="Renta" />
-            </items>
-        </MenuButton>
+        <!-- Campo Nombre -->
+        <Label fx:id="lblNombre" layoutX="50.0" layoutY="100.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su nombre" />
+        <TextField fx:id="txtNombre" layoutX="50.0" layoutY="125.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- ID generado automáticamente -->
-        <Label layoutX="38.0" layoutY="152.0" text="ID Almacén:" textFill="WHITE" />
-        <TextField fx:id="txtIdAlmacen" editable="false" layoutX="141.0" layoutY="139.0" prefWidth="220.0" style="-fx-opacity: 0.8;" />
+        <!-- Campo Correo Electrónico -->
+        <Label fx:id="lblCorreo" layoutX="50.0" layoutY="180.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su correo electrónico" />
+        <TextField fx:id="txtCorreo" layoutX="50.0" layoutY="205.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- Tamaño -->
-        <Label layoutX="35.0" layoutY="195.0" text="Tamaño:" />
-        <MenuButton fx:id="mbTamano" layoutX="141.0" layoutY="191.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona tamaño">
-            <items>
-                <MenuItem fx:id="miGrande" text="Grande" />
-                <MenuItem fx:id="miMediano" text="Mediano" />
-                <MenuItem fx:id="miPequeno" text="Pequeño" />
-            </items>
-        </MenuButton>
+        <!-- Campo Teléfono -->
+        <Label fx:id="lblTelefono" layoutX="50.0" layoutY="260.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su número de teléfono" />
+        <TextField fx:id="txtTelefono" layoutX="50.0" layoutY="285.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- Sede -->
-        <Label layoutX="45.0" layoutY="248.0" text="Sede:" />
-        <MenuButton fx:id="mbSede" layoutX="141.0" layoutY="244.0" prefHeight="26.0" prefWidth="220.0" text="Selecciona sede">
-            <items>
-                <MenuItem fx:id="miSede1" text="Sede 1" />
-                <MenuItem fx:id="miSede2" text="Sede 2" />
-                <MenuItem fx:id="miSede3" text="Sede 3" />
-            </items>
-        </MenuButton>
+        <!-- Campo Selección de Sede -->
+        <Label fx:id="lblSede" layoutX="50.0" layoutY="340.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Seleccione la sede asignada" />
+        <ComboBox fx:id="comboSedes" layoutX="50.0" layoutY="365.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- Precio -->
-        <Label layoutX="40.0" layoutY="310.0" text="Precio (MXN):" />
-        <TextField fx:id="txtPrecio" layoutX="141.0" layoutY="306.0" prefWidth="220.0" promptText="Ej: 5000.00" />
-
-        <!-- Ubicación -->
-        <Label layoutX="45.0" layoutY="359.0" text="Ubicación:" />
-        <TextField fx:id="txtUbicacion" layoutX="141.0" layoutY="355.0" prefWidth="220.0" promptText="Dirección del almacén" />
-
-        <!-- Botón registrar -->
-        <Button fx:id="btnRegistrar" layoutX="221.0" layoutY="457.0" onAction="#OnRegistrar" style="-fx-background-color: #607B8B; -fx-text-fill: white; -fx-background-radius: 10;" text="Registrar Almacén" />
-        <ImageView fitHeight="96.0" fitWidth="121.0" layoutX="62.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true" />
+        <!-- Botón Registrar -->
+        <Button fx:id="btnRegistrar" layoutX="192.0" layoutY="525.0" mnemonicParsing="false" onAction="#OnRegistarAction" prefHeight="45.0" prefWidth="184.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;" text="Registrar Admin">
+            <font>
+                <Font name="Arial" size="16.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

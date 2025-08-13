@@ -3,6 +3,8 @@ package org.example.almasenesmorelos1;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.almasenesmorelos1.data.DataStore;
+import org.example.almasenesmorelos1.model.Sede;
 
 public class RegistrarSedesController {
 
@@ -34,6 +36,8 @@ public class RegistrarSedesController {
             String idAdmi = idAdmiField.getText();
             String telefono = telefonoField.getText();
             String fechaRegistro = diaField.getText() + "/" + mesField.getText() + "/" + anioField.getText();
+
+            DataStore.getInstance().agregarSede(new Sede(idSede, municipio));
 
             // Llama al método del SedesController para agregar la nueva sede a la vista
             if (sedesController != null) {

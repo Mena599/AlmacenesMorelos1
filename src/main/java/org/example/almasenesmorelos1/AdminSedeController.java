@@ -65,33 +65,14 @@ public class AdminSedeController {
     }
 
     public void handleLogoutIconAction(javafx.scene.input.MouseEvent mouseEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ConfirmarCerrarSesion.fxml"));
-            Parent root = loader.load();
-
-            ConfirmarCerrarSesionController controller = loader.getController();
-
-            Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.setTitle("Confirmar Cerrar Sesión");
-            dialog.setScene(new Scene(root));
-            dialog.showAndWait();
-
-            if (controller.isConfirmado()) {
-                // Usa mouseEvent en lugar de crear un evento nulo
-                Stage currentStage = (Stage) ((ImageView) mouseEvent.getSource()).getScene().getWindow();
-                currentStage.close();
-
-                FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
-                Parent loginRoot = loginLoader.load();
-                Stage loginStage = new Stage();
-                loginStage.setScene(new Scene(loginRoot));
-                loginStage.show();
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("InicioSuperAdmin.fxml"));
+                Stage currentStage = (Stage) imgLongOut.getScene().getWindow();
+                currentStage.setScene(new Scene(root));
+                currentStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de Login.");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la ventana de confirmación.");
         }
     }
-
-}

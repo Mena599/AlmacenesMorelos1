@@ -1,7 +1,9 @@
 package org.example.almasenesmorelos1;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.AccessibleAction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,7 +25,9 @@ public class InicioAdminSedeController {
     @FXML private Button verClientesButton;
     @FXML private ImageView userIcon;
     @FXML private ImageView logoutIcon;
-
+    @FXML private Button btnalmacenes;
+    @FXML private Button btnClientes;
+    @FXML public Button ir;
     @FXML
     private void initialize() {
         // Método que se ejecuta al cargar el FXML.
@@ -31,22 +35,37 @@ public class InicioAdminSedeController {
     }
 
     @FXML
-    private void handleVerAlmacenesButton() throws IOException {
-        System.out.println("Navegando a la vista de Almacenes...");
-        // Cargar la nueva vista de almacenes
-        Parent almacenesView = FXMLLoader.load(getClass().getResource("AlmacenesView.fxml"));
-        Scene scene = rootPane.getScene();
-        scene.setRoot(almacenesView);
+    private void iralmacenes(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Almacenes.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el stage actual desde el botón que se presionó
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Administradores de sede");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void handleVerClientesButton() {
-        System.out.println("Botón de 'Ver Clientes' presionado.");
-        showAlert(Alert.AlertType.INFORMATION, "Funcionalidad Pendiente", "Esta función se implementará pronto.");
-        // Aquí se podría cargar la vista de clientes
-        // Parent clientesView = FXMLLoader.load(getClass().getResource("ClientesView.fxml"));
-        // Scene scene = rootPane.getScene();
-        // scene.setRoot(clientesView);
+    private void irclientes(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Clientes.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el stage actual desde el botón que se presionó
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Administradores de sede");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -64,6 +83,23 @@ public class InicioAdminSedeController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar el popup de perfil.");
+        }
+    }
+
+    @FXML
+    private void irinicio(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el stage actual desde el botón que se presionó
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Administradores de sede");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

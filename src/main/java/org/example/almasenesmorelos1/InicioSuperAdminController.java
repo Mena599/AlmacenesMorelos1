@@ -13,7 +13,7 @@ public class InicioSuperAdminController {
     @FXML
     public Button btnmirar1;
     public Button btnmirar2;
-
+    public Button btnir;
     @FXML
     public void OnMirar1Action(ActionEvent event) {
         try {
@@ -46,6 +46,23 @@ public class InicioSuperAdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void ir(ActionEvent  event) {
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InicioAdminSede.fxml"));
+        Parent root = loader.load();
+
+        // Obtener el stage actual desde el botón que se presionó
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Administradores de sede");
+        stage.show();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
 

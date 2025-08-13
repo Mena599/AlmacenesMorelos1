@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.example.almasenesmorelos1.data.DataStore;
+import org.example.almasenesmorelos1.model.Sede;
 
 import java.io.IOException;
 
@@ -124,7 +126,7 @@ public class SedesController {
     @FXML
     private void handleLogoutAction(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("InicioSuperAdmin.fxml"));
             Stage currentStage = (Stage) logoutIcon.getScene().getWindow();
             currentStage.setScene(new Scene(root));
             currentStage.show();
@@ -141,4 +143,23 @@ public class SedesController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    private void initialize() {
+        // 1) Limpia contenedores para evitar duplicados al reentrar
+        if (mainCardContainer != null) mainCardContainer.getChildren().clear();
+        if (sedeListContainer != null) sedeListContainer.getChildren().clear();
+
+        // 2) Repinta todo desde el DataStore
+        for (Sede s : DataStore.getInstance().getSedes()) {
+            // Reusa tu método existente para crear tarjeta + botón lateral
+            addSedeToView(
+                    s.getId(),
+                    s.getMunicipio(),
+                    s.getIdAdmin(),
+                    s.getTelefono(),
+                    s.getFechaRegistro()
+            );
+        }
+    }
+
 }

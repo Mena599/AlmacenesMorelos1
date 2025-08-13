@@ -75,12 +75,12 @@
                                     <Insets bottom="10.0" top="20.0" />
                                 </VBox.margin>
                             </Label>
-                            <Label prefWidth="480.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." wrapText="true">
+                            <Label prefWidth="480.0" text="En este apartado puedes navergar a tus almacenes registrados o si deseas registrar nuevos tambien puedes hacerlo, solo da un click en mirar y listp. suerte!!" wrapText="true">
                                 <font>
                                     <Font name="Arial" size="14.0" />
                                 </font>
                             </Label>
-                            <Button fx:id="verAlmacenesButton" mnemonicParsing="false" onAction="#handleVerAlmacenesButton" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #516E7E; -fx-background-radius: 5;" text="Mirar" textFill="WHITE">
+                            <Button fx:id="btnalmacenes" mnemonicParsing="false" onAction="#iralmacenes" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #516E7E; -fx-background-radius: 5;" text="Mirar" textFill="WHITE">
                                 <font>
                                     <Font name="Arial Bold" size="14.0" />
                                 </font>
@@ -116,12 +116,12 @@
                                     <Insets bottom="10.0" top="20.0" />
                                 </VBox.margin>
                             </Label>
-                            <Label prefWidth="480.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." wrapText="true">
+                            <Label prefWidth="480.0" text="En este apartado puedes navergar a tus almacenes registrados o si deseas registrar nuevos tambien puedes hacerlo, solo da un click en mirar y listp. suerte!!" wrapText="true">
                                 <font>
                                     <Font name="Arial" size="14.0" />
                                 </font>
                             </Label>
-                            <Button fx:id="verClientesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #516E7E; -fx-background-radius: 5;" text="Mirar" textFill="WHITE">
+                            <Button fx:id="btnclientes" mnemonicParsing="false" onAction="#irclientes" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #516E7E; -fx-background-radius: 5;" text="Mirar" textFill="WHITE">
                                 <font>
                                     <Font name="Arial Bold" size="14.0" />
                                 </font>
@@ -168,5 +168,6 @@
                 </ImageView>
             </children>
         </HBox>
+      <Button fx:id="ir" layoutX="1180.0" layoutY="594.0" mnemonicParsing="false" onAction="#irinicio" text="Navegar" />
     </children>
 </AnchorPane>

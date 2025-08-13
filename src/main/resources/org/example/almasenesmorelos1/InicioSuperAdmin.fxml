@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #FCFCEC;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.InicioSuperAdminController">
 
 
@@ -29,7 +28,7 @@
             <!-- Icono usuario -->
             <ImageView fx:id="imgUser" fitHeight="32.0" fitWidth="34.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="80.0">
                 <image>
-                    <Image url="@../../../img/User.png" />
+                    <Image url="@../../../img/user.png" />
                 </image>
             </ImageView>
 
@@ -109,5 +108,6 @@
                </HBox.margin>
             </Button>
          </children></HBox>
+      <Button fx:id="btnir" layoutX="926.0" layoutY="548.0" mnemonicParsing="false" onAction="#ir" text="Navegar" />
    </children>
 </AnchorPane>

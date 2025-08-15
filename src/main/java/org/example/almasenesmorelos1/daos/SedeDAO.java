@@ -14,7 +14,7 @@ public class SedeDAO {
 
     public Long crear(Sede s) throws SQLException {
         String sql = "INSERT INTO sedes (municipio, id_admin_sede, telefono, fecha_registro) VALUES (?,?,?,DEFAULT)";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, s.getMunicipio());
             if (s.getIdAdminSede() == null) ps.setNull(2, Types.NUMERIC);
@@ -30,7 +30,7 @@ public class SedeDAO {
 
     public boolean actualizar(Sede s) throws SQLException {
         String sql = "UPDATE sedes SET municipio=?, id_admin_sede=?, telefono=? WHERE id_sede=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, s.getMunicipio());
             if (s.getIdAdminSede() == null) ps.setNull(2, Types.NUMERIC);
@@ -43,7 +43,7 @@ public class SedeDAO {
 
     public boolean eliminar(Long id) throws SQLException {
         String sql = "DELETE FROM sedes WHERE id_sede=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setLong(1, id);
             return ps.executeUpdate() == 1;
@@ -52,7 +52,7 @@ public class SedeDAO {
 
     public Optional<Sede> buscarPorId(Long id) throws SQLException {
         String sql = "SELECT id_sede, municipio, id_admin_sede, telefono, fecha_registro FROM sedes WHERE id_sede=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -65,7 +65,7 @@ public class SedeDAO {
     public List<Sede> listar() throws SQLException {
         String sql = "SELECT id_sede, municipio, id_admin_sede, telefono, fecha_registro FROM sedes ORDER BY id_sede DESC";
         List<Sede> out = new ArrayList<>();
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) out.add(map(rs));

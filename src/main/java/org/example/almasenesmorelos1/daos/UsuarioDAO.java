@@ -14,7 +14,7 @@ public class UsuarioDAO {
             SELECT id_usuario, nombre, apellido, correo, usuario, contraseña, rol
             FROM usuarios WHERE usuario = ?
         """;
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
@@ -29,7 +29,7 @@ public class UsuarioDAO {
             INSERT INTO usuarios (nombre, apellido, correo, usuario, contraseña, rol)
             VALUES (?,?,?,?,?,?)
         """;
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, u.getNombre());
             ps.setString(2, u.getApellido());

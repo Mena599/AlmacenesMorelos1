@@ -16,7 +16,7 @@ public class VentaDAO {
         String sqlVenta = "INSERT INTO ventas (id_cliente, id_almacen, fecha, monto) VALUES (?,?,?,?)";
         String sqlBloqueo = "UPDATE almacenes SET disponible='N' WHERE id_almacen=? AND disponible='S'";
 
-        try (Connection cn = ConexionDB.getConnection()) {
+        try (Connection cn = ConexionDB.getConexion()) {
             cn.setAutoCommit(false);
             try (PreparedStatement ps1 = cn.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS);
                  PreparedStatement ps2 = cn.prepareStatement(sqlBloqueo)) {

@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 public class HelloApplication extends Application {
 
     // Cambia este nombre si quieres arrancar con otra vista (por ejemplo "Login.fxml")
-    private static final String FXML_INICIAL = "Almacenes.fxml";
-    // private static final String FXML_INICIAL = "Login.fxml";
+    //private static final String FXML_INICIAL = "Almacenen.fxml";
+    private static final String FXML_INICIAL = "Login.fxml";
 
     @Override
     public void start(Stage stage) {

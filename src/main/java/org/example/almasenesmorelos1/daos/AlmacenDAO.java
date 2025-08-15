@@ -16,7 +16,7 @@ public class AlmacenDAO {
             INSERT INTO almacenes (nombre, ubicacion, capacidad, precio_renta, precio_venta, disponible)
             VALUES (?,?,?,?,?,?)
         """;
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, a.getNombre());
             ps.setString(2, a.getUbicacion());
@@ -37,7 +37,7 @@ public class AlmacenDAO {
             UPDATE almacenes SET nombre=?, ubicacion=?, capacidad=?, precio_renta=?, precio_venta=?, disponible=?
             WHERE id_almacen=?
         """;
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, a.getNombre());
             ps.setString(2, a.getUbicacion());
@@ -52,7 +52,7 @@ public class AlmacenDAO {
 
     public boolean eliminar(Long id) throws SQLException {
         String sql = "DELETE FROM almacenes WHERE id_almacen=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setLong(1, id);
             return ps.executeUpdate() == 1;
@@ -61,7 +61,7 @@ public class AlmacenDAO {
 
     public Optional<Almacen> buscarPorId(Long id) throws SQLException {
         String sql = "SELECT id_almacen, nombre, ubicacion, capacidad, precio_renta, precio_venta, disponible FROM almacenes WHERE id_almacen=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -74,7 +74,7 @@ public class AlmacenDAO {
     public List<Almacen> listarTodos() throws SQLException {
         String sql = "SELECT id_almacen, nombre, ubicacion, capacidad, precio_renta, precio_venta, disponible FROM almacenes ORDER BY id_almacen DESC";
         List<Almacen> out = new ArrayList<>();
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) out.add(map(rs));
@@ -85,7 +85,7 @@ public class AlmacenDAO {
     public List<Almacen> listarDisponibles() throws SQLException {
         String sql = "SELECT id_almacen, nombre, ubicacion, capacidad, precio_renta, precio_venta, disponible FROM almacenes WHERE disponible='S' ORDER BY id_almacen DESC";
         List<Almacen> out = new ArrayList<>();
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) out.add(map(rs));
@@ -95,7 +95,7 @@ public class AlmacenDAO {
 
     public boolean marcarDisponible(Long idAlmacen, boolean disponible) throws SQLException {
         String sql = "UPDATE almacenes SET disponible=? WHERE id_almacen=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, disponible ? "S" : "N");
             ps.setLong(2, idAlmacen);

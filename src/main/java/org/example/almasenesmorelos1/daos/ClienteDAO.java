@@ -13,7 +13,7 @@ public class ClienteDAO {
 
     public Long crear(Cliente c) throws SQLException {
         String sql = "INSERT INTO clientes (nombre, apellidos, telefono, correo) VALUES (?,?,?,?)";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, c.getNombre());
             ps.setString(2, c.getApellidos());
@@ -29,7 +29,7 @@ public class ClienteDAO {
 
     public boolean actualizar(Cliente c) throws SQLException {
         String sql = "UPDATE clientes SET nombre=?, apellidos=?, telefono=?, correo=? WHERE id_cliente=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setString(1, c.getNombre());
             ps.setString(2, c.getApellidos());
@@ -42,7 +42,7 @@ public class ClienteDAO {
 
     public boolean eliminar(Long id) throws SQLException {
         String sql = "DELETE FROM clientes WHERE id_cliente=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setLong(1, id);
             return ps.executeUpdate() == 1;
@@ -51,7 +51,7 @@ public class ClienteDAO {
 
     public Optional<Cliente> buscarPorId(Long id) throws SQLException {
         String sql = "SELECT id_cliente, nombre, apellidos, telefono, correo FROM clientes WHERE id_cliente=?";
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -64,7 +64,7 @@ public class ClienteDAO {
     public List<Cliente> listar() throws SQLException {
         String sql = "SELECT id_cliente, nombre, apellidos, telefono, correo FROM clientes ORDER BY id_cliente DESC";
         List<Cliente> out = new ArrayList<>();
-        try (Connection cn = ConexionDB.getConnection();
+        try (Connection cn = ConexionDB.getConexion();
              PreparedStatement ps = cn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) out.add(map(rs));

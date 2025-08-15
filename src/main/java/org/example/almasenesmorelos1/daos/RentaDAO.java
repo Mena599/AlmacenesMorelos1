@@ -16,7 +16,7 @@ public class RentaDAO {
         String sqlRenta = "INSERT INTO rentas (id_cliente, id_almacen, fecha_inicio, fecha_fin, monto) VALUES (?,?,?,?,?)";
         String sqlBloqueo = "UPDATE almacenes SET disponible='N' WHERE id_almacen=? AND disponible='S'";
 
-        try (Connection cn = ConexionDB.getConnection()) {
+        try (Connection cn = ConexionDB.getConexion()) {
             cn.setAutoCommit(false);
             try (PreparedStatement ps1 = cn.prepareStatement(sqlRenta, Statement.RETURN_GENERATED_KEYS);
                  PreparedStatement ps2 = cn.prepareStatement(sqlBloqueo)) {
@@ -58,7 +58,7 @@ public class RentaDAO {
         String sqlBorrarRenta = "DELETE FROM rentas WHERE id_renta=?";
         String sqlLiberar = "UPDATE almacenes SET disponible='S' WHERE id_almacen=?";
 
-        try (Connection cn = ConexionDB.getConnection()) {
+        try (Connection cn = ConexionDB.getConexion()) {
             cn.setAutoCommit(false);
             try (PreparedStatement ps1 = cn.prepareStatement(sqlBorrarRenta);
                  PreparedStatement ps2 = cn.prepareStatement(sqlLiberar)) {

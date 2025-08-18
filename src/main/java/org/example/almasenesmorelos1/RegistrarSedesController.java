@@ -35,15 +35,17 @@ public class RegistrarSedesController {
             String idAdmi = idAdmiField.getText();
             String telefono = telefonoField.getText();
             String fechaRegistro = diaField.getText() + "/" + mesField.getText() + "/" + anioField.getText();
+            Sede nueva = new Sede(idSede, municipio, idAdmi, telefono, fechaRegistro);
+// si tu modelo ya tiene 'ocupada', asegúrate que inicie libre:
+            nueva.setOcupada(false);
 
-            DataStore.getInstance().agregarSede(
-                    new Sede(idSede, municipio, idAdmi, telefono, fechaRegistro)
-            );
+            DataStore.getInstance().agregarSede(nueva);
 
-            // Llama al método del SedesController para agregar la nueva sede a la vista
+// Agregar la tarjeta a la vista usando el método que ahora acepta Sede
             if (sedesController != null) {
-                sedesController.addSedeToView(idSede, municipio, idAdmi, telefono, fechaRegistro);
+                sedesController.addSedeToView(nueva);
             }
+
 
             showAlert(Alert.AlertType.INFORMATION, "Registro Exitoso", "La nueva sede ha sido registrada correctamente.");
 

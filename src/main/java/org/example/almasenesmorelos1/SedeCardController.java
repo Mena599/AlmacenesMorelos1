@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,6 +29,10 @@ public class SedeCardController {
     @FXML
     private Button deleteButton;
 
+    // NUEVO: etiqueta para mostrar estado (puedes agregar un <Label fx:id="estadoLabel"> en tu FXML)
+    @FXML
+    private Label estadoLabel;
+
     private SedesController sedesController;
     private FlowPane parentContainer; // Cambia HBox a FlowPane
 
@@ -41,9 +44,24 @@ public class SedeCardController {
         this.parentContainer = parentContainer;
     }
 
+    // Método para setear datos básicos
     public void setSedeData(String idSede, String municipio, String telefono) {
         municipioLabel.setText(municipio);
         telefonoLabel.setText("Teléfono: " + telefono);
+    }
+
+    // 🔹 NUEVO: Método para actualizar color y estado
+    public void setEstadoOcupada(boolean ocupada) {
+        if (estadoLabel != null) {
+            estadoLabel.setText(ocupada ? "Ocupada" : "Libre");
+        }
+
+        // Cambia color del fondo según estado
+        if (ocupada) {
+            rootCard.setStyle("-fx-background-color: #ffd6d6; -fx-background-radius: 10;");
+        } else {
+            rootCard.setStyle("-fx-background-color: #d6ffd6; -fx-background-radius: 10;");
+        }
     }
 
     @FXML

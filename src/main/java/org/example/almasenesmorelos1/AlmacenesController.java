@@ -7,12 +7,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 
 /**
@@ -27,7 +30,8 @@ public class AlmacenesController {
     public Button btnAgregar;
     @FXML
     public Button btnir;
-
+    @FXML
+    public ImageView imgLongOut;
     @FXML
     private FlowPane TargetasFlow; // FlowPane donde van las tarjetas del inventario
 
@@ -79,7 +83,7 @@ public class AlmacenesController {
             Node card = loader.load();
 
             TargetasAlmacenesController ctrl = loader.getController();
-            ctrl.setData(a, "—"); // <- pásale un texto fijo por ahora
+            ctrl.setData(a); // <- pásale un texto fijo por ahora
 
             return card;
         } catch (Exception e) {
@@ -99,7 +103,7 @@ public class AlmacenesController {
     @FXML
     private void abrirFormularioAlmacen(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistrarAlmacenes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/almasenesmorelos1/RegistrarAlmacenes.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -109,9 +113,34 @@ public class AlmacenesController {
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            // Puedes mostrar una alerta si quieres
+            new Alert(Alert.AlertType.ERROR, "No se pudo abrir el formulario. Revisa la ruta del FXML.").showAndWait();
         }
     }
+    @FXML
+    private void handleLogoutIconAction(MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/org/example/almasenesmorelos1/InicioAdminSede.fxml")
+            );
+
+            // Obtener la ventana desde el nodo que disparó el evento (100% seguro)
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de InicioAdminSede.");
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert a = new Alert(type);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
+
 
     /**
      * Navegación a Venta (revisa el título que pones).

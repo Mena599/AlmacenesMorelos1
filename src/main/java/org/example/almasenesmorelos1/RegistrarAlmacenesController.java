@@ -3,6 +3,9 @@ package org.example.almasenesmorelos1;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.collections.transformation.FilteredList; // NUEVO
+// NUEVO: para saber qué sede está logueada
+import org.example.almasenesmorelos1.model.SessionManager;
 
 public class RegistrarAlmacenesController {
 
@@ -20,10 +23,12 @@ public class RegistrarAlmacenesController {
         // ID autogenerado
         txtIdAlmacen.setText(generarIdAlmacen());
 
-        // (Opcional) Selección por defecto
-        if (comboTamano.getItems() != null && !comboTamano.getItems().isEmpty()) {
-            comboTamano.getSelectionModel().selectFirst();
+        // Si el Combo viene vacío desde el FXML, lo llenamos aquí
+        if (comboTamano.getItems() == null || comboTamano.getItems().isEmpty()) {
+            comboTamano.getItems().setAll("Grande", "Mediano", "Pequeño");
         }
+        // Selección por defecto
+        comboTamano.getSelectionModel().selectFirst();
     }
 
     private String generarIdAlmacen() {
@@ -58,19 +63,26 @@ public class RegistrarAlmacenesController {
             return;
         }
 
-        String id = txtIdAlmacen.getText();
+        String id = txtIdAlmacen.getText().trim();
         String tam = comboTamano.getValue();
         String ubicacion = txtUbicacion.getText().trim();
 
         double m2 = mapTamanoToM2(tam); // Grande/Mediano/Pequeño → m²
 
+        // ⚠️ Sede del admin actual (sesión en memoria)
+        String sedeId = SessionManager.get().getSedeId();
+        if (sedeId == null || sedeId.isBlank()) {
+            warn("No se pudo obtener la sede del administrador. Vuelve a iniciar sesión.");
+            return;
+        }
+
         // --- CREA EL MODELO ---
-        // ⬇️ Elige una de estas dos opciones según tu clase Almacen:
+        // ✅ Opción preferida: tu Almacen tiene constructor con sedeId y precio
+        Almacen almacen = new Almacen(id, m2, ubicacion, sedeId, precio);
 
-
-
-        // Opción B: si tu Almacen es (id, tamanoM2, ubicacion, precio)
-        Almacen almacen = new Almacen(id, m2, ubicacion, precio);
+        // ❌ Si tu clase no tiene ese constructor, usa esta alternativa:
+        // Almacen almacen = new Almacen(id, m2, ubicacion, precio);
+        // almacen.setSedeId(sedeId);
 
         // --- Guarda en Store y cierra ---
         store.addAlmacen(almacen);

@@ -3,6 +3,7 @@ package org.example.almasenesmorelos1.data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import org.example.almasenesmorelos1.Almacen;
 import org.example.almasenesmorelos1.model.Sede;
 import org.example.almasenesmorelos1.model.AdminSede;
 import org.example.almasenesmorelos1.model.Cliente;
@@ -21,6 +22,35 @@ public class DataStore {
     private DataStore() {}
 
     // ==============================
+    //  INVENTARIO (ALMACENES)
+    // ==============================
+    private final ObservableList<Almacen> inventario = FXCollections.observableArrayList();
+
+    public ObservableList<Almacen> getInventario() { return inventario; }
+
+    public void addAlmacen(Almacen a) {
+        if (a == null) return;
+        // Evitar duplicados por ID
+        boolean exists = inventario.stream().anyMatch(x -> {
+            String xi = x.getId(), ai = a.getId();
+            return xi != null && ai != null && xi.equalsIgnoreCase(ai);
+        });
+        if (!exists) inventario.add(a);
+    }
+
+    public void removeAlmacen(Almacen a) { inventario.remove(a); }
+    public void clearInventario() { inventario.clear(); }
+
+    /** Buscar almacén por ID dentro de inventario. */
+    public Almacen findAlmacenById(String id) {
+        if (id == null) return null;
+        for (Almacen a : inventario) {
+            if (id.equalsIgnoreCase(a.getId())) return a;
+        }
+        return null;
+    }
+
+    // ==============================
     //  SEDES
     // ==============================
     private final ObservableList<Sede> sedes = FXCollections.observableArrayList();
@@ -28,7 +58,7 @@ public class DataStore {
 
     public void agregarSede(Sede s) {
         if (s == null) return;
-        boolean exists = sedes.stream().anyMatch(x -> x.getId().equalsIgnoreCase(s.getId()));
+        boolean exists = sedes.stream().anyMatch(x -> x.getId() != null && x.getId().equalsIgnoreCase(s.getId()));
         if (!exists) sedes.add(s);
     }
     public void eliminarSede(Sede s) { sedes.remove(s); }
@@ -42,7 +72,7 @@ public class DataStore {
 
     public void agregarAdmin(AdminSede a) {
         if (a == null) return;
-        // Evitar duplicado por correo, por ejemplo
+        // Evitar duplicado por correo
         boolean exists = admins.stream().anyMatch(x -> {
             String xc = x.getCorreo(), ac = a.getCorreo();
             return xc != null && ac != null && xc.equalsIgnoreCase(ac);
@@ -91,7 +121,7 @@ public class DataStore {
     public void limpiarAsignaciones() { asignaciones.clear(); }
 
     // ==============================
-    //  NUEVO: Helpers internos
+    //  Helpers internos
     // ==============================
     private String generarUserDesdeNombre(String nombre) {
         if (nombre == null) return "admin";
@@ -114,23 +144,27 @@ public class DataStore {
         );
     }
 
+    /** ¿Está ocupada una sede? Derivado: si algún admin ya tiene esa sede asignada. */
+    public boolean isSedeOcupada(String sedeId) {
+        if (sedeId == null) return false;
+        return admins.stream().anyMatch(a ->
+                a.getSedeId() != null && a.getSedeId().equalsIgnoreCase(sedeId)
+        );
+    }
+
     // ==============================
-    //  NUEVO: Asignar sede a admin + credenciales
+    //  Asignar sede a admin + credenciales
     // ==============================
     /**
-     * Asigna una sede libre a un admin, genera credenciales (username/password),
-     * y marca la sede como ocupada. Retorna true si tuvo éxito.
+     * Asigna una sede libre a un admin, genera credenciales (username/password = username),
+     * y vincula el admin a esa sede. No modifica el objeto Sede (ocupación se deriva).
+     * @return true si tuvo éxito; false si la sede está ocupada o datos inválidos.
      */
     public synchronized boolean asignarSedeAAdmin(Sede sede, AdminSede admin, String usernameDeseado) {
         if (sede == null || admin == null) return false;
-        // Validar que la sede esté libre (requiere Sede.isOcupada())
-        try {
-            // Si el modelo no tiene ocupada, esto dará NPE; asegúrate de tenerlo
-            if (sede.isOcupada()) return false;
-        } catch (Exception e) {
-            // Si no existe el campo ocupada en tu modelo, quita este try/catch y añade el campo.
-            return false;
-        }
+
+        // Validar que la sede esté libre (derivado)
+        if (isSedeOcupada(sede.getId())) return false;
 
         // Generar username único
         String base = (usernameDeseado == null || usernameDeseado.isBlank())
@@ -141,18 +175,13 @@ public class DataStore {
         while (usernameTomado(u)) u = base + i++;
 
         admin.setUsername(u);
-        admin.setPassword(u);         // demo: misma contraseña
+        admin.setPassword(u);         // demo: password = username
         admin.setSedeId(sede.getId());
-
-        // Marcar sede como ocupada y vincular admin
-        sede.setOcupada(true);
-        sede.setIdAdmin(admin.getCorreo()); // o un ID propio si lo manejas
 
         // Asegurar admin en lista
         if (!admins.contains(admin)) admins.add(admin);
 
-        // sedes es observable y trabajamos sobre la MISMA instancia de la lista,
-        // por lo que tu UI reacciona y repinta solo con setStyle o listener ya configurado.
+        // UI de sedes puede consultar isSedeOcupada(sede.getId()) para pintar "ocupada"
         return true;
     }
 
@@ -162,7 +191,7 @@ public class DataStore {
     }
 
     // ==============================
-    //  NUEVO: Login simple de Admin de Sede
+    //  Login simple de Admin de Sede (en memoria)
     // ==============================
     public AdminSede loginAdminSede(String username, String password) {
         if (username == null || password == null) return null;

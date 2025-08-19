@@ -12,6 +12,11 @@ import org.example.almasenesmorelos1.model.User;
 import org.example.almasenesmorelos1.utils.PasswordUtils;
 import org.example.almasenesmorelos1.utils.ConexionDB;
 
+// 👇 NUEVO
+import org.example.almasenesmorelos1.data.DataStore;
+import org.example.almasenesmorelos1.model.AdminSede;
+import org.example.almasenesmorelos1.model.SessionManager;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,7 +31,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        // Probar conexión a la base de datos
+        // Probar conexión a la base de datos (si falla, NO rompe el login de admin de sede en memoria)
         try (Connection conn = ConexionDB.getConnection()) {
             if (conn != null && !conn.isClosed()) {
                 lblMensaje.setText("✅ Base de datos conectada correctamente.");
@@ -48,13 +53,23 @@ public class LoginController {
             return;
         }
 
-        // Opción de superusuario fijo
+        // 1) SuperAdmin fijo (como pediste)
         if (nombreUsuario.equals("root") && password.equals("admin123")) {
             cargarVista("InicioSuperAdmin.fxml", "Inicio - SuperAdmin");
             return;
         }
 
-        // Validación desde BD
+        // 2) NUEVO: Intentar login como Admin de Sede en MEMORIA (DataStore)
+        AdminSede admin = DataStore.getInstance().loginAdminSede(nombreUsuario, password);
+        if (admin != null) {
+            // Guardar sesión en memoria y abrir la vista única del Admin de Sede
+            SessionManager.get().login(admin);
+            String titulo = "Sede: " + safe(admin.getSedeId()) + " — Admin: " + safe(admin.getUsername());
+            cargarVista("InicioAdminSede.fxml", titulo);
+            return;
+        }
+
+        // 3) Si no es Admin de Sede en memoria, seguimos con tu validación por BD (UserDAO)
         try {
             UserDAO dao = new UserDAO();
             User user = dao.findByUsername(nombreUsuario);
@@ -64,8 +79,8 @@ public class LoginController {
 
                 String fxmlDestino = switch (tipoUsuario.toUpperCase()) {
                     case "SUPERADMIN" -> "InicioSuperAdmin.fxml";
-                    case "ADMIN" -> "InicioAdmin.fxml";
-                    case "CLIENTE" -> "InicioCliente.fxml";
+                    case "ADMIN"      -> "InicioAdmin.fxml";
+                    case "CLIENTE"    -> "InicioCliente.fxml";
                     default -> null;
                 };
 
@@ -94,4 +109,6 @@ public class LoginController {
             lblMensaje.setText("Error al cargar la vista: " + e.getMessage());
         }
     }
+
+    private String safe(String s) { return s == null ? "" : s; }
 }

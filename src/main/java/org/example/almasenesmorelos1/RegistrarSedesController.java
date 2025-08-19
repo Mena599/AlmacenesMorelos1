@@ -5,12 +5,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.almasenesmorelos1.data.DataStore;
 import org.example.almasenesmorelos1.model.Sede;
+
 public class RegistrarSedesController {
 
     @FXML private TextField idSedeField;
     @FXML private TextField municipioField;
-    @FXML private PasswordField idAdmiField;
-    @FXML private PasswordField confirmarIdAdmiField;
     @FXML private TextField telefonoField;
     @FXML private TextField diaField;
     @FXML private TextField mesField;
@@ -32,17 +31,18 @@ public class RegistrarSedesController {
             // Lógica para registrar la sede en la base de datos
             String idSede = idSedeField.getText();
             String municipio = municipioField.getText();
-            String idAdmi = idAdmiField.getText();
             String telefono = telefonoField.getText();
             String fechaRegistro = diaField.getText() + "/" + mesField.getText() + "/" + anioField.getText();
+            Sede nueva = new Sede(idSede, municipio, "", telefono, fechaRegistro); // ID Admi se ha eliminado
 
-            DataStore.getInstance().agregarSede(
-                    new Sede(idSede, municipio, idAdmi, telefono, fechaRegistro)
-            );
+            // si tu modelo ya tiene 'ocupada', asegúrate que inicie libre:
+            nueva.setOcupada(false);
 
-            // Llama al método del SedesController para agregar la nueva sede a la vista
+            DataStore.getInstance().agregarSede(nueva);
+
+            // Agregar la tarjeta a la vista usando el método que ahora acepta Sede
             if (sedesController != null) {
-                sedesController.addSedeToView(idSede, municipio, idAdmi, telefono, fechaRegistro);
+                sedesController.addSedeToView(nueva);
             }
 
             showAlert(Alert.AlertType.INFORMATION, "Registro Exitoso", "La nueva sede ha sido registrada correctamente.");
@@ -56,7 +56,6 @@ public class RegistrarSedesController {
         }
     }
 
-    // ... métodos validateInput() y showAlert() sin cambios ...
     private boolean validateInput() {
         String errorMessage = "";
 
@@ -65,15 +64,6 @@ public class RegistrarSedesController {
         }
         if (municipioField.getText() == null || municipioField.getText().trim().isEmpty()) {
             errorMessage += "El campo 'Municipio' no puede estar vacío.\n";
-        }
-        if (idAdmiField.getText() == null || idAdmiField.getText().trim().isEmpty()) {
-            errorMessage += "El campo 'Admi-Sede' no puede estar vacío.\n";
-        }
-        if (confirmarIdAdmiField.getText() == null || confirmarIdAdmiField.getText().trim().isEmpty()) {
-            errorMessage += "El campo 'Confirmar ID Admin' no puede estar vacío.\n";
-        }
-        if (!idAdmiField.getText().equals(confirmarIdAdmiField.getText())) {
-            errorMessage += "Los ID de administrador no coinciden.\n";
         }
         if (telefonoField.getText() == null || telefonoField.getText().trim().isEmpty()) {
             errorMessage += "El campo 'Número Telefónico' no puede estar vacío.\n";

@@ -1,5 +1,6 @@
 package org.example.almasenesmorelos1;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,32 +21,48 @@ import java.io.IOException;
 
 public class SedesController {
 
-    @FXML
-    private ImageView userIcon;
+    @FXML private ImageView userIcon;
+    @FXML private ImageView logoutIcon;
+    @FXML private ImageView logoImage;
+
+    @FXML private Button addButton;
+
+    @FXML private VBox sedeListContainer;    // Botones laterales por sede
+    @FXML private FlowPane mainCardContainer; // Tarjetas de sedes
 
     @FXML
-    private ImageView logoutIcon;
+    private void initialize() {
+        // Render inicial
+        renderAll();
 
-    @FXML
-    private ImageView logoImage; // Asegúrate de que tu logo tenga este fx:id
+        // Suscribirse a cambios en la lista de sedes
+        DataStore.getInstance().getSedes().addListener((ListChangeListener<Sede>) ch -> {
+            // Estrategia simple: re-render completo
+            renderAll();
+        });
+    }
 
-    @FXML
-    private Button addButton;
+    /** Repinta lista y tarjetas desde el store (estado único de la app). */
+    private void renderAll() {
+        if (mainCardContainer != null) mainCardContainer.getChildren().clear();
+        if (sedeListContainer != null) sedeListContainer.getChildren().clear();
 
-    @FXML
-    private VBox sedeListContainer; // Contenedor para los botones de sedes
-
-    @FXML
-    private FlowPane mainCardContainer; // Contenedor para las tarjetas de sedes
+        for (Sede s : DataStore.getInstance().getSedes()) {
+            addSedeToView(s);
+        }
+    }
 
     @FXML
     private void handleAddButtonAction(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegistrarSedes.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/org/example/almasenesmorelos1/RegistrarSedes.fxml")
+            );
             Parent root = fxmlLoader.load();
 
             RegistrarSedesController registrarController = fxmlLoader.getController();
-            registrarController.setSedesController(this);
+            // si necesitas, pásale este controller:
+            // registrarController.setSedesController(this);
 
             Stage stage = new Stage();
             stage.setTitle("Registrar Nueva Sede");
@@ -54,32 +70,59 @@ public class SedesController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
+            // Al cerrar, la lista observable disparará renderAll() vía el listener
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error al cargar formulario", "No se pudo cargar el formulario de registro.");
+            showAlert(Alert.AlertType.ERROR, "Error al cargar", "No se pudo cargar el formulario de registro.");
         }
     }
 
-    public void addSedeToView(String idSede, String municipio, String idAdmi, String telefono, String fechaRegistro) {
+    /** Crea tarjeta + botón lateral para una sede. */
+    public void addSedeToView(Sede sede) {
         try {
-            FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("SedeCard.fxml"));
+            // --- Tarjeta ---
+            FXMLLoader cardLoader = new FXMLLoader(
+                    getClass().getResource("/org/example/almasenesmorelos1/SedeCard.fxml")
+            );
             VBox sedeCard = cardLoader.load();
 
             SedeCardController cardController = cardLoader.getController();
-            cardController.setSedeData(idSede, municipio, telefono);
+            // setea datos básicos
+            cardController.setSedeData(sede.getId(), sede.getMunicipio(), sede.getTelefono());
             cardController.setSedesController(this);
             cardController.setParentContainer(mainCardContainer);
 
+            // marca visual de ocupación
+            if (hasMethodSetEstado(cardController)) {
+                try {
+                    // si tu controller tiene este método:
+                    cardController.getClass().getMethod("setEstadoOcupada", boolean.class)
+                            .invoke(cardController, sede.isOcupada());
+                } catch (Exception ignore) {}
+            } else {
+                // fallback: color tarjeta
+                if (sede.isOcupada()) {
+                    sedeCard.setStyle("-fx-background-color:#ffd8d8; -fx-background-radius:12;");
+                } else {
+                    sedeCard.setStyle("-fx-background-color:#d8ffe0; -fx-background-radius:12;");
+                }
+            }
+
             mainCardContainer.getChildren().add(sedeCard);
 
-            Button newSedeButton = new Button(municipio);
+            // --- Botón lateral ---
+            Button newSedeButton = new Button(sede.getMunicipio());
             newSedeButton.setPrefHeight(40.0);
             newSedeButton.setPrefWidth(210.0);
             newSedeButton.setStyle("-fx-background-color: #7d8f9e; -fx-background-radius: 5;");
             newSedeButton.setTextFill(javafx.scene.paint.Color.WHITE);
-            newSedeButton.setFont(new javafx.scene.text.Font(18.0));
-            VBox.setMargin(newSedeButton, new javafx.geometry.Insets(10.0, 20.0, 0, 20.0));
             newSedeButton.setOnAction(this::handleSedeButton);
+
+            // Deshabilitar si ocupada (opcional)
+            if (sede.isOcupada()) {
+                newSedeButton.setDisable(true);
+                newSedeButton.setStyle("-fx-background-color: #b0b8bf; -fx-background-radius: 5; -fx-opacity: 0.8;");
+            }
 
             sedeListContainer.getChildren().add(newSedeButton);
 
@@ -89,77 +132,69 @@ public class SedesController {
         }
     }
 
+    private boolean hasMethodSetEstado(Object ctrl) {
+        try {
+            ctrl.getClass().getMethod("setEstadoOcupada", boolean.class);
+            return true;
+        } catch (NoSuchMethodException e) {
+            return false;
+        }
+    }
+
     @FXML
     private void handleSedeButton(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         String sedeName = clickedButton.getText();
-        showAlert(Alert.AlertType.INFORMATION, "Navegación", "Has seleccionado la sede de " + sedeName);
+        showAlert(Alert.AlertType.INFORMATION, "Sede", "Has seleccionado la sede de " + sedeName);
     }
 
     public void removeSedeCard(Parent card) {
         if (mainCardContainer.getChildren().contains(card)) {
             mainCardContainer.getChildren().remove(card);
-            showAlert(Alert.AlertType.INFORMATION, "Eliminación Exitosa", "La sede ha sido eliminada.");
+            showAlert(Alert.AlertType.INFORMATION, "Eliminación", "La sede ha sido eliminada.");
         }
     }
 
     @FXML
     private void handleUserIconAction(MouseEvent event) {
-        showAlert(Alert.AlertType.INFORMATION, "Información de Usuario", "Se ha hecho clic en el icono de usuario.");
+        showAlert(Alert.AlertType.INFORMATION, "Usuario", "Se hizo clic en el icono de usuario.");
     }
 
-    // Nuevo método para manejar el clic en el logo
     @FXML
     private void handleLogoAction(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("InicioSuperAdmin.fxml"));
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/org/example/almasenesmorelos1/InicioSuperAdmin.fxml")
+            );
             Stage currentStage = (Stage) logoImage.getScene().getWindow();
             currentStage.setScene(new Scene(root));
             currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de Inicio.");
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar Inicio.");
         }
     }
 
-    // Nuevo método para manejar el clic en el ícono de cerrar sesión
     @FXML
     private void handleLogoutAction(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("InicioSuperAdmin.fxml"));
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/org/example/almasenesmorelos1/InicioSuperAdmin.fxml")
+            );
             Stage currentStage = (Stage) logoutIcon.getScene().getWindow();
             currentStage.setScene(new Scene(root));
             currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar la vista de Login.");
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo cargar Login.");
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(msg);
         alert.showAndWait();
     }
-    @FXML
-    private void initialize() {
-        // 1) Limpia contenedores para evitar duplicados al reentrar
-        if (mainCardContainer != null) mainCardContainer.getChildren().clear();
-        if (sedeListContainer != null) sedeListContainer.getChildren().clear();
-
-        // 2) Repinta todo desde el DataStore
-        for (Sede s : DataStore.getInstance().getSedes()) {
-            // Reusa tu método existente para crear tarjeta + botón lateral
-            addSedeToView(
-                    s.getId(),
-                    s.getMunicipio(),
-                    s.getIdAdmin(),
-                    s.getTelefono(),
-                    s.getFechaRegistro()
-            );
-        }
-    }
-
 }

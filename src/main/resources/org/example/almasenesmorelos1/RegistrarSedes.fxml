@@ -22,7 +22,7 @@
 
     <Label text="Sede" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <TextField fx:id="idSedeField" promptText="ID Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="idSedeFiel" promptText="ID Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/user.png" />
@@ -46,25 +46,12 @@
         </padding>
     </HBox>
 
-    <Label text="Admi-Sede" textFill="WHITE" />
+    <Label text="ID Sede" textFill="WHITE" />
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <PasswordField fx:id="idAdmiField" promptText="ID Admi-Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="idSedeField" promptText="ID Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
         <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../img/eye.png" />
-            </image>
-        </ImageView>
-        <padding>
-            <Insets left="10" right="10" />
-        </padding>
-    </HBox>
-
-    <Label text="Confirmar ID Admin" textFill="WHITE" />
-    <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
-        <PasswordField fx:id="confirmarIdAdmiField" promptText="ID Admi-Sede" style="-fx-background-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS" />
-        <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../img/eye.png" />
+                <Image url="@../../../img/user.png" />
             </image>
         </ImageView>
         <padding>

@@ -2,70 +2,93 @@ package org.example.almasenesmorelos1;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.almasenesmorelos1.data.DataStore;
+import org.example.almasenesmorelos1.model.AsignacionCliente;
+import org.example.almasenesmorelos1.model.EstatusOperacion;
 
-import java.io.IOException;
+import java.time.LocalDate;
 
 public class RegistrarClientesController {
 
-    @FXML
-    private TextField txtNombre;
+    // === Campos que existen en tu FXML ===
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtApellidos;
+    @FXML private TextField txtCorreo;
+    @FXML private TextField txtTelefono;
+    @FXML private ComboBox<String> comboOperacion;  // "Venta" | "Renta"
+    @FXML private DatePicker dpFechaNacimiento;     // (usaremos como fecha de adquisición por ahora)
+    @FXML private Button btnRegistrar;
 
-    @FXML
-    private TextField txtCorreo;
+    // === Estado: el almacén al que asignaremos el cliente ===
+    private Almacen almacen;
 
-    @FXML
-    private TextField txtTelefono;
-
-    @FXML
-    private Button btnRegistrar;
-
-    // Esta referencia se pasará desde ClientesController al abrir la ventana emergente
-    private ClientesController clientesController;
-
-    public void setClientesController(ClientesController controller) {
-        this.clientesController = controller;
+    /** Llamado desde la tarjeta antes de mostrar el modal */
+    public void setAlmacen(Almacen a) {
+        this.almacen = a;
     }
 
     @FXML
     private void OnRegistarAction(ActionEvent event) {
-        try {
-            // 1. Obtener los datos del formulario
-            String nombre = txtNombre.getText();
-            String correo = txtCorreo.getText();
-            String telefono = txtTelefono.getText();
+        // 1) Validaciones básicas
+        String nombre = safe(txtNombre.getText());
+        String apellidos = safe(txtApellidos.getText());
+        String correo = safe(txtCorreo.getText());
+        String telefono = safe(txtTelefono.getText());
+        String operacion = comboOperacion != null ? comboOperacion.getValue() : null;
+        LocalDate fechaAdq = dpFechaNacimiento != null ? dpFechaNacimiento.getValue() : null;
 
-            // 2. Cargar la tarjeta
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TargetasCliente.fxml"));
-            AnchorPane tarjeta = loader.load();
+        StringBuilder sb = new StringBuilder();
+        if (almacen == null) sb.append("No se recibió el almacén.\n");
+        if (nombre.isBlank()) sb.append("Ingresa el nombre.\n");
+        if (apellidos.isBlank()) sb.append("Ingresa los apellidos.\n");
+        if (correo.isBlank()) sb.append("Ingresa el correo.\n");
+        if (telefono.isBlank()) sb.append("Ingresa el teléfono.\n");
+        if (operacion == null) sb.append("Selecciona Venta o Renta.\n");
+        if (fechaAdq == null) sb.append("Selecciona la fecha.\n");
 
-            // 3. Obtener el controlador y asignar datos
-            TargetasClienteController controller = loader.getController();
-            controller.setLblNombre(nombre);
-            controller.setLblCorreo(correo);
-            controller.setLblTelefono(telefono);
-
-            // 4. Agregar tarjeta al FlowPane en la vista de Clientes
-            if (clientesController != null) {
-                clientesController.getTargetasFlow().getChildren().add(tarjeta);
-            }
-
-            // 5. Cerrar esta ventana (la del formulario)
-            Stage stage = (Stage) btnRegistrar.getScene().getWindow();
-            stage.close();
-
-            System.out.println("ClientesController: " + clientesController);
-            System.out.println("FlowPane: " + (clientesController != null ? clientesController.getTargetasFlow() : "null"));
-            System.out.println("Nombre capturado: " + nombre);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (sb.length() > 0) {
+            alert(Alert.AlertType.WARNING, "Datos incompletos", sb.toString());
+            return;
         }
 
+        // 2) Mapear estatus y preparar datos
+        EstatusOperacion estatus = "Venta".equalsIgnoreCase(operacion)
+                ? EstatusOperacion.VENTA
+                : EstatusOperacion.RENTA;
+
+        String nombreCompleto = (nombre + " " + apellidos).trim();
+        LocalDate fechaExp = fechaAdq.plusMonths(12); // regla provisional
+
+        // 3) Construir Asignación y guardar en DataStore
+        AsignacionCliente asig = new AsignacionCliente(
+                almacen.getId(),
+                nombreCompleto,
+                correo,
+                telefono,
+                estatus,
+                fechaAdq,
+                fechaExp
+        );
+        DataStore.getInstance().agregarAsignacion(asig);
+
+        // 4) Cerrar modal
+        cerrarVentana();
     }
 
+    private void cerrarVentana() {
+        Stage stage = (Stage) btnRegistrar.getScene().getWindow();
+        if (stage != null) stage.close();
+    }
+
+    private String safe(String s) { return s == null ? "" : s.trim(); }
+
+    private void alert(Alert.AlertType type, String title, String msg) {
+        Alert a = new Alert(type);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
 }

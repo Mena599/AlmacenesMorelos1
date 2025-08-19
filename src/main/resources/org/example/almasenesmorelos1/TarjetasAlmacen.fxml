@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane fx:id="rootPane" prefHeight="300.0" prefWidth="229.0" style="-fx-background-color: #607B8B; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.TargetasAlmacenesController">
+
     <children>
         <ImageView fx:id="imgCliente" fitHeight="125.0" fitWidth="100.0" layoutX="65.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -12,21 +13,25 @@
             </image>
         </ImageView>
 
-        <Label layoutX="14.0" layoutY="174.0" text="Tamaño" textFill="WHITE" />
-        <Label fx:id="lblTamano" layoutX="14.0" layoutY="191.0" textFill="WHITE" />
+        <!-- ID -->
+        <Label layoutX="14.0" layoutY="154.0" text="ID" textFill="WHITE" />
+        <Label fx:id="lblId" layoutX="14.0" layoutY="171.0" textFill="WHITE" />
 
-        <Label layoutX="14.0" layoutY="216.0" text="Sede" textFill="WHITE" />
-        <Label fx:id="lblSede" layoutX="14.0" layoutY="233.0" textFill="WHITE" />
+        <!-- Tamaño -->
+        <Label layoutX="14.0" layoutY="194.0" text="Tamaño" textFill="WHITE" />
+        <Label fx:id="lblTamano" layoutX="14.0" layoutY="211.0" textFill="WHITE" />
 
-        <Label layoutX="14.0" layoutY="258.0" text="Precio" textFill="WHITE" />
-        <Label fx:id="lblId" layoutX="14.0" layoutY="275.0" textFill="WHITE" />
-        <Button fx:id="btnEliminar" layoutX="140.0" layoutY="252.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="17.0" prefWidth="75.0" style="-fx-background-radius: 8; -fx-background-color: #304850;">
+        <!-- Ubicación -->
+        <Label layoutX="14.0" layoutY="234.0" text="Ubicación" textFill="WHITE" />
+        <Label fx:id="lblUbicacion" layoutX="14.0" layoutY="251.0" textFill="WHITE" />
+
+        <!-- Precio -->
+        <Label layoutX="14.0" layoutY="274.0" text="Precio" textFill="WHITE" />
+        <Label fx:id="lblPrecio" layoutX="65.0" layoutY="274.0" textFill="WHITE" />
+
+        <Button fx:id="btnvr" layoutX="140.0" layoutY="252.0" mnemonicParsing="false" onAction="#ventarenta" prefHeight="17.0" prefWidth="75.0" style="-fx-background-radius: 8; -fx-background-color: #304850;" text="V/R" textFill="WHITE">
             <graphic>
-                <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../img/filled-trash.png" />
-                    </image>
-                </ImageView>
+
             </graphic>
         </Button>
     </children>

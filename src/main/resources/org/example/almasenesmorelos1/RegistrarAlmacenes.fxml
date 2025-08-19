@@ -4,36 +4,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="600.0" prefWidth="421.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAdminController">
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane fx:id="rootPane" prefHeight="452.0" prefWidth="326.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
     <children>
-        <!-- Título del formulario -->
-        <Label fx:id="lblTitulo" layoutX="88.0" layoutY="27.0" prefHeight="35.0" prefWidth="263.0" style="-fx-text-fill: #87A1B1; -fx-font-weight: bold;" text="Registro Admin Sede" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="70.0">
-            <font>
-                <Font name="Arial" size="24.0" />
-            </font>
-        </Label>
+        <VBox spacing="15" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <Label style="-fx-text-fill: #87A1B1; -fx-font-weight: bold;" text="Registrar Almacén">
+                <font>
+                    <Font name="Arial" size="24.0" />
+                </font>
+            </Label>
 
-        <!-- Campo Nombre -->
-        <Label fx:id="lblNombre" layoutX="50.0" layoutY="100.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su nombre" />
-        <TextField fx:id="txtNombre" layoutX="50.0" layoutY="125.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            <HBox spacing="10">
+                <Label text="ID:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                <TextField fx:id="txtIdAlmacen" editable="false" prefWidth="120" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            </HBox>
 
-        <!-- Campo Correo Electrónico -->
-        <Label fx:id="lblCorreo" layoutX="50.0" layoutY="180.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su correo electrónico" />
-        <TextField fx:id="txtCorreo" layoutX="50.0" layoutY="205.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            <HBox spacing="10">
+                <Label text="Tamaño:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                <ComboBox fx:id="comboTamano" promptText="Selecciona un tamaño" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Grande" />
+                            <String fx:value="Mediano" />
+                            <String fx:value="Pequeño" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
 
-        <!-- Campo Teléfono -->
-        <Label fx:id="lblTelefono" layoutX="50.0" layoutY="260.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su número de teléfono" />
-        <TextField fx:id="txtTelefono" layoutX="50.0" layoutY="285.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            <HBox spacing="10">
+                <Label text="Ubicación:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                <TextField fx:id="txtUbicacion" promptText="Calle, ciudad" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            </HBox>
 
-        <!-- Campo Selección de Sede -->
-        <Label fx:id="lblSede" layoutX="50.0" layoutY="340.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Seleccione la sede asignada" />
-        <ComboBox fx:id="comboSedes" layoutX="50.0" layoutY="365.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            <HBox spacing="10">
+                <Label text="Precio:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                <TextField fx:id="txtPrecio" promptText="Ej. 1000" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            </HBox>
 
-        <!-- Botón Registrar -->
-        <Button fx:id="btnRegistrar" layoutX="192.0" layoutY="525.0" mnemonicParsing="false" onAction="#OnRegistarAction" prefHeight="45.0" prefWidth="184.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;" text="Registrar Admin">
-            <font>
-                <Font name="Arial" size="16.0" />
-            </font>
-        </Button>
+            <Button fx:id="btnRegistrar" onAction="#OnRegistarAction" prefHeight="40" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="Registrar" />
+        </VBox>
     </children>
 </AnchorPane>

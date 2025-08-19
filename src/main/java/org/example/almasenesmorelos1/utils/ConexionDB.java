@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static javafx.application.Application.launch;
+
 public class ConexionDB {
     private static Connection conexion;
 
@@ -12,7 +14,7 @@ public class ConexionDB {
         if (conexion == null || conexion.isClosed()) {
             try {
                 Class.forName("oracle.jdbc.OracleDriver");
-                String ruta = "C:/Users/jenif/AlmacenesMorelos1/src/main/resources/org/example/almasenesmorelos1/Wallet_Integradora";
+                String ruta = "/home/menaisrael599/IdeaProjects/AlmacenesMorelos1/src/main/resources/org/example/almasenesmorelos1/Wallet_Integradora";
                 String alias = "integradora_high";
                 String url = "jdbc:oracle:thin:@" + alias + "?tns_ADMIN=" + ruta;
 
@@ -50,3 +52,4 @@ public class ConexionDB {
         }
     }
 }
+

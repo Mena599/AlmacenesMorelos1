@@ -33,7 +33,7 @@
             </ImageView>
 
             <!-- Icono logout -->
-            <ImageView fx:id="imgLongOut" fitHeight="32.0" fitWidth="34.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="20.0">
+            <ImageView fx:id="logoutIcon" fitHeight="30.0" fitWidth="30.0" layoutX="932.0" layoutY="25.0" onMouseClicked="#handleLogoutIconAction" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@../../../img/log-out.png" />
                 </image>

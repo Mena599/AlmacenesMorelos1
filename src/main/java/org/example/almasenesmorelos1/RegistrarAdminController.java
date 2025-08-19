@@ -1,20 +1,15 @@
 package org.example.almasenesmorelos1;
 
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-
-// ➕ NUEVO
 import javafx.util.StringConverter;
 import org.example.almasenesmorelos1.data.DataStore;
+import org.example.almasenesmorelos1.model.AdminSede;
 import org.example.almasenesmorelos1.model.Sede;
+import javafx.collections.ListChangeListener;
 
 public class RegistrarAdminController {
 
@@ -23,82 +18,93 @@ public class RegistrarAdminController {
     @FXML private TextField txtTelefono;
     @FXML private Button btnRegistrar;
 
-    // ➕ NUEVO: selector de sede
     @FXML private ComboBox<Sede> sedeCombo;
 
-    // Referencia del contenedor de tarjetas (tu flujo actual)
-    private AdminSedeController AdminSedeController;
+    // Opcional: solo si lo tienes en tu FXML. Si no, déjalo como null sin problemas.
+    @FXML private TextField txtUsername;
 
-    public void setAdminSedeController(AdminSedeController controller) {
-        this.AdminSedeController = controller;
-    }
+    // Lista “cache” para reponer sedes libres cuando cambie el store
+    private final ObservableList<Sede> sedesLibres = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
-        // Cargar sedes desde el DataStore (ObservableList)
-        sedeCombo.setItems(DataStore.getInstance().getSedes());
+        recargarSedesLibres();
 
-        // Mostrar el nombre de la sede
+        sedeCombo.setItems(sedesLibres);
         sedeCombo.setConverter(new StringConverter<>() {
             @Override public String toString(Sede s) { return s == null ? "" : s.getNombre(); }
             @Override public Sede fromString(String s) { return null; }
         });
 
-        sedeCombo.getItems().addListener((javafx.collections.ListChangeListener<Sede>) c -> {
-            btnRegistrar.setDisable(sedeCombo.getItems().isEmpty());
-        });
+        btnRegistrar.setDisable(sedeCombo.getItems().isEmpty());
+    }
+
+
+    private void recargarSedesLibres() {
+        sedesLibres.setAll(
+                DataStore.getInstance().getSedes().filtered(s -> {
+                    try { return !s.isOcupada(); } catch (Exception e) { return true; }
+                })
+        );
     }
 
     @FXML
-    private void OnRegistarAction(ActionEvent event) {
-        try {
-            String nombre = txtNombre.getText();
-            String correo = txtCorreo.getText();
-            String telefono = txtTelefono.getText();
-            Sede sedeSeleccionada = sedeCombo.getValue();
+    private void OnRegistarAction() {
+        String nombre   = safe(txtNombre.getText());
+        String correo   = safe(txtCorreo.getText());
+        String telefono = safe(txtTelefono.getText());
+        Sede sedeSeleccionada = sedeCombo.getValue();
+        String usernameDeseado = txtUsername != null ? safe(txtUsername.getText()) : null;
 
-            // Validaciones mínimas
-            StringBuilder errors = new StringBuilder();
-            if (nombre == null || nombre.trim().isEmpty()) errors.append("Nombre requerido.\n");
-            if (correo == null || correo.trim().isEmpty()) errors.append("Correo requerido.\n");
-            if (telefono == null || telefono.trim().isEmpty()) errors.append("Teléfono requerido.\n");
-            if (sedeSeleccionada == null) errors.append("Selecciona una Sede.\n");
+        // Validaciones
+        StringBuilder errors = new StringBuilder();
+        if (nombre.isBlank())   errors.append("Nombre requerido.\n");
+        if (correo.isBlank())   errors.append("Correo requerido.\n");
+        if (telefono.isBlank()) errors.append("Teléfono requerido.\n");
+        if (sedeSeleccionada == null) errors.append("Selecciona una Sede.\n");
 
-            if (errors.length() > 0) {
-                // Alerta simple sin romper tu flujo (usa tus utilidades si tienes)
-                javafx.scene.control.Alert a = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
-                a.setTitle("Datos incompletos");
-                a.setHeaderText(null);
-                a.setContentText(errors.toString());
-                a.showAndWait();
-                return;
+        // Verificar que siga libre (por si cambió el estado mientras el modal estaba abierto)
+        if (sedeSeleccionada != null) {
+            try {
+                if (sedeSeleccionada.isOcupada()) {
+                    errors.append("La sede seleccionada ya está ocupada.\n");
+                }
+            } catch (Exception ignore) {
+                // Si tu modelo aún no tiene 'ocupada', añade el campo como te pasé antes
             }
-
-            // Cargar tarjeta como ya lo hacías
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TargetasAdminSede.fxml"));
-            AnchorPane tarjeta = loader.load();
-
-            TargetasAdminSedeController controller = loader.getController();
-            controller.setLblNombre(nombre);
-            controller.setLblCorreo(correo);
-            controller.setLblTelefono(telefono);
-            // ➕ (opcional) si tu tarjeta muestra la sede:
-            // controller.setLblSede(sedeSeleccionada.getNombre());
-
-            if (AdminSedeController != null) {
-                AdminSedeController.getTargetasFlow().getChildren().add(tarjeta);
-            }
-
-            // Cerrar esta ventana
-            Stage stage = (Stage) btnRegistrar.getScene().getWindow();
-            stage.close();
-
-            System.out.println("ClientesController: " + AdminSedeController);
-            System.out.println("FlowPane: " + (AdminSedeController != null ? AdminSedeController.getTargetasFlow() : "null"));
-            System.out.println("Nombre capturado: " + nombre + " | Sede: " + sedeSeleccionada.getNombre());
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        if (errors.length() > 0) {
+            new Alert(Alert.AlertType.WARNING, errors.toString()).showAndWait();
+            return;
+        }
+
+        // Crear el admin (datos básicos)
+        AdminSede admin = new AdminSede(nombre, correo, telefono);
+
+        // Asignar en DataStore: bloquea sede, setea sedeId, crea username/password únicos
+        boolean ok = DataStore.getInstance().asignarSedeAAdmin(sedeSeleccionada, admin, usernameDeseado);
+        if (!ok) {
+            new Alert(Alert.AlertType.ERROR, "No se pudo asignar la sede (ya ocupada o usuario existente).").showAndWait();
+            // Refrescar la lista por si cambió el estado
+            recargarSedesLibres();
+            return;
+        }
+
+        // Mostrar credenciales
+        new Alert(Alert.AlertType.INFORMATION,
+                "Admin asignado correctamente.\n\nUsuario: " + admin.getUsername() +
+                        "\nContraseña: " + admin.getPassword() +
+                        "\nSede: " + admin.getSedeId()
+        ).showAndWait();
+
+        // Refrescar sedes libres del combo (ésta ya no debe aparecer)
+        recargarSedesLibres();
+
+        // Cerrar modal
+        Stage stage = (Stage) btnRegistrar.getScene().getWindow();
+        if (stage != null) stage.close();
     }
+
+    private String safe(String s) { return s == null ? "" : s.trim(); }
 }

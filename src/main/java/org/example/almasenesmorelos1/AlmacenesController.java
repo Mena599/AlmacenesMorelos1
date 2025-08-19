@@ -14,6 +14,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import javafx.collections.transformation.FilteredList; // NUEVO
+import org.example.almasenesmorelos1.model.SessionManager; // NUEVO
 
 import javax.swing.text.html.ImageView;
 import java.io.IOException;
@@ -34,6 +36,8 @@ public class AlmacenesController {
     public ImageView imgLongOut;
     @FXML
     private FlowPane TargetasFlow; // FlowPane donde van las tarjetas del inventario
+    // NUEVO
+    private FilteredList<Almacen> filtrados;
 
     // Store central (listas observables)
     private final AppStore store = AppStore.getInstance();
@@ -68,7 +72,32 @@ public class AlmacenesController {
 
         // 3) Botón para abrir el formulario (modal)
         btnAgregar.setOnAction(this::abrirFormularioAlmacen);
+        // ==========================
+// FILTRO POR SEDE DEL ADMIN
+// ==========================
+        String sedeActual = SessionManager.get().getSedeId();
+
+// Crea la lista filtrada desde el inventario del store
+        filtrados = new FilteredList<>(store.getInventario(),
+                a -> sedeActual != null
+                        && a != null
+                        && sedeActual.equalsIgnoreCase(safe(a.getSedeId())));
+
+// Render inicial SOLO con los de mi sede
+        TargetasFlow.getChildren().setAll(
+                filtrados.stream().map(this::createAlmacenCard).toList()
+        );
+
+// Si el inventario cambia (altas/bajas), re-pintamos con el filtro
+        store.getInventario().addListener((ListChangeListener<Almacen>) c -> {
+            TargetasFlow.getChildren().setAll(
+                    filtrados.stream().map(this::createAlmacenCard).toList()
+            );
+        });
+
     }
+    // NUEVO
+    private String safe(String s) { return s == null ? "" : s; }
 
     /**
      * Crea una tarjeta simple de Almacén (versión placeholder).
@@ -91,9 +120,6 @@ public class AlmacenesController {
             return new Label("Error cargando tarjeta");
         }
     }
-
-
-
 
     /**
      * Abre el formulario de registro como ventana modal.
@@ -146,13 +172,5 @@ public class AlmacenesController {
      * Navegación a Venta (revisa el título que pones).
      * En tu código cargabas Venta.fxml pero ponías "Renta" en el título.
      */
-    @FXML
-    public void OnirAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Renta.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) btnir.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Venta"); // <-- corrige el título si es Venta
-        stage.show();
-    }
+
 }

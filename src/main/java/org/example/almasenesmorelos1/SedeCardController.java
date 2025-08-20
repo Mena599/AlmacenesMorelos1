@@ -17,24 +17,17 @@ import java.io.IOException;
 
 public class SedeCardController {
 
-    @FXML
-    private VBox rootCard;
-
-    @FXML
-    private Label municipioLabel;
-
-    @FXML
-    private Label telefonoLabel;
-
-    @FXML
-    private Button deleteButton;
-
-    // NUEVO: etiqueta para mostrar estado (puedes agregar un <Label fx:id="estadoLabel"> en tu FXML)
-    @FXML
-    private Label estadoLabel;
+    @FXML private VBox rootCard;
+    @FXML private Label municipioLabel;
+    @FXML private Label telefonoLabel;
+    @FXML private Button deleteButton;
+    @FXML private Label estadoLabel;
 
     private SedesController sedesController;
-    private FlowPane parentContainer; // Cambia HBox a FlowPane
+    private FlowPane parentContainer;
+
+    // 🔹 Nuevo: conservar el id para poder eliminar en el store
+    private String sedeId;
 
     public void setSedesController(SedesController sedesController) {
         this.sedesController = sedesController;
@@ -44,30 +37,27 @@ public class SedeCardController {
         this.parentContainer = parentContainer;
     }
 
-    // Método para setear datos básicos
+    // ⬇️ Guarda el id y setea textos
     public void setSedeData(String idSede, String municipio, String telefono) {
+        this.sedeId = idSede;
         municipioLabel.setText(municipio);
         telefonoLabel.setText("Teléfono: " + telefono);
     }
 
-    // 🔹 NUEVO: Método para actualizar color y estado
     public void setEstadoOcupada(boolean ocupada) {
         if (estadoLabel != null) {
             estadoLabel.setText(ocupada ? "Ocupada" : "Libre");
         }
-
-        // Cambia color del fondo según estado
-        if (ocupada) {
-            rootCard.setStyle("-fx-background-color: #ffd6d6; -fx-background-radius: 10;");
-        } else {
-            rootCard.setStyle("-fx-background-color: #d6ffd6; -fx-background-radius: 10;");
-        }
+        rootCard.setStyle(ocupada
+                ? "-fx-background-color: #ffd6d6; -fx-background-radius: 10;"
+                : "-fx-background-color: #d6ffd6; -fx-background-radius: 10;");
     }
 
     @FXML
     private void handleDeleteButtonAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EliminarSede.fxml"));
+            // ⚠️ Usa ruta absoluta para evitar problemas de carga
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/almasenesmorelos1/EliminarSede.fxml"));
             Parent root = loader.load();
 
             EliminarSedeController controller = loader.getController();
@@ -79,9 +69,12 @@ public class SedeCardController {
             dialog.showAndWait();
 
             if (controller.isConfirmado()) {
-                if (parentContainer != null) {
+                // ✅ Elimina en el store a través del SedesController
+                if (sedesController != null && sedeId != null) {
+                    sedesController.deleteSedeById(sedeId);
+                } else if (parentContainer != null) {
+                    // Fallback (solo quita la tarjeta actual si no hay controller/id)
                     parentContainer.getChildren().remove(rootCard);
-                    showAlert(Alert.AlertType.INFORMATION, "Eliminación Exitosa", "La sede ha sido eliminada.");
                 }
             }
         } catch (IOException e) {

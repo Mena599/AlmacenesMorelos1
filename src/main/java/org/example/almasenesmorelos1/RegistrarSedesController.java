@@ -6,6 +6,10 @@ import javafx.stage.Stage;
 import org.example.almasenesmorelos1.data.DataStore;
 import org.example.almasenesmorelos1.model.Sede;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
 public class RegistrarSedesController {
 
     @FXML private TextField idSedeField;
@@ -20,15 +24,24 @@ public class RegistrarSedesController {
     // Referencia al controlador de la ventana principal
     private SedesController sedesController;
 
+    // Contador para el número de sedes
+    private static int sedeCounter = 1;
+
     // Método para establecer la referencia del SedesController
     public void setSedesController(SedesController sedesController) {
         this.sedesController = sedesController;
     }
 
     @FXML
+    public void initialize() {
+        // Al abrir el formulario, generar y mostrar el ID de la sede
+        idSedeField.setText(generateSedeId());
+    }
+
+    @FXML
     private void handleRegistrarButtonAction() {
         if (validateInput()) {
-            // Lógica para registrar la sede en la base de datos
+            // Obtener el ID de la sede ya generado
             String idSede = idSedeField.getText();
             String municipio = municipioField.getText();
             String telefono = telefonoField.getText();
@@ -51,17 +64,30 @@ public class RegistrarSedesController {
             Stage stage = (Stage) registrarButton.getScene().getWindow();
             stage.close();
 
+            // Incrementar el contador de sedes
+            sedeCounter++;
         } else {
             // La validación falló, se muestra la alerta correspondiente
         }
     }
 
+    private String generateSedeId() {
+        // Obtener la fecha actual
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+        String fechaRegistro = dateFormat.format(now); // Formato ddMMyy
+
+        // Generar 4 números aleatorios
+        Random random = new Random();
+        int randomNumbers = random.nextInt(10000); // Genera un número entre 0 y 9999
+
+        // Formatear el ID de la sede
+        return "Sed" + sedeCounter + "-" + fechaRegistro + "-" + String.format("%04d", randomNumbers);
+    }
+
     private boolean validateInput() {
         String errorMessage = "";
 
-        if (idSedeField.getText() == null || idSedeField.getText().trim().isEmpty()) {
-            errorMessage += "El campo 'ID Sede' no puede estar vacío.\n";
-        }
         if (municipioField.getText() == null || municipioField.getText().trim().isEmpty()) {
             errorMessage += "El campo 'Municipio' no puede estar vacío.\n";
         }
@@ -88,3 +114,4 @@ public class RegistrarSedesController {
         alert.showAndWait();
     }
 }
+

@@ -18,22 +18,6 @@
                         <Insets left="20.0" right="20.0" />
                     </HBox.margin>
                 </ImageView>
-                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #516E7E; -fx-background-radius: 20;">
-                    <children>
-                        <TextField fx:id="searchField" prefHeight="40.0" prefWidth="350.0" promptText="Buscar" style="-fx-background-color: transparent;" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../img/search_icon.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                    <padding>
-                        <Insets left="20.0" right="20.0" />
-                    </padding>
-                    <HBox.margin>
-                        <Insets left="300.0" />
-                    </HBox.margin>
-                </HBox>
                 <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="400.0" spacing="20.0">
                     <children>
                         <ImageView fx:id="userIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#handleUserIconAction" pickOnBounds="true" preserveRatio="true">

@@ -3,9 +3,11 @@ package org.example.almasenesmorelos1;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.collections.transformation.FilteredList; // NUEVO
-// NUEVO: para saber qué sede está logueada
 import org.example.almasenesmorelos1.model.SessionManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 public class RegistrarAlmacenesController {
 
@@ -32,7 +34,17 @@ public class RegistrarAlmacenesController {
     }
 
     private String generarIdAlmacen() {
-        return String.format("ALM-%03d", contadorId);
+        // Obtener la fecha actual
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+        String fechaRegistro = dateFormat.format(now); // Formato ddMMyy
+
+        // Generar 4 números aleatorios
+        Random random = new Random();
+        int randomNumbers = random.nextInt(10000); // Genera un número entre 0 y 9999
+
+        // Formatear el ID del almacén
+        return String.format("ALM%d-%s-%04d", contadorId, fechaRegistro, randomNumbers);
     }
 
     @FXML
@@ -77,12 +89,7 @@ public class RegistrarAlmacenesController {
         }
 
         // --- CREA EL MODELO ---
-        // ✅ Opción preferida: tu Almacen tiene constructor con sedeId y precio
         Almacen almacen = new Almacen(id, m2, ubicacion, sedeId, precio);
-
-        // ❌ Si tu clase no tiene ese constructor, usa esta alternativa:
-        // Almacen almacen = new Almacen(id, m2, ubicacion, precio);
-        // almacen.setSedeId(sedeId);
 
         // --- Guarda en Store y cierra ---
         store.addAlmacen(almacen);

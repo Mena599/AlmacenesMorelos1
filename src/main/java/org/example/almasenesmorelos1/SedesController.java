@@ -16,7 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.almasenesmorelos1.data.DataStore;
 import org.example.almasenesmorelos1.model.Sede;
-
+import javafx.collections.ObservableList;
 import java.io.IOException;
 
 public class SedesController {
@@ -51,6 +51,20 @@ public class SedesController {
             addSedeToView(s);
         }
     }
+    public void deleteSedeById(String id) {
+        if (id == null) return;
+        ObservableList<Sede> sedes = DataStore.getInstance().getSedes();
+        boolean removed = sedes.removeIf(s -> id.equals(s.getId()));
+
+        if (!removed) {
+            showAlert(Alert.AlertType.WARNING, "No encontrada",
+                    "No se encontró la sede a eliminar (id: " + id + ").");
+        } else {
+            showAlert(Alert.AlertType.INFORMATION, "Eliminación",
+                    "La sede ha sido eliminada.");
+        }
+    }
+
 
     @FXML
     private void handleAddButtonAction(ActionEvent event) {

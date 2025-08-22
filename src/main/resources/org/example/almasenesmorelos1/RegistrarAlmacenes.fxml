@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <AnchorPane fx:id="rootPane" prefHeight="452.0" prefWidth="326.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarAlmacenesController">
     <children>
@@ -16,12 +16,12 @@
             </Label>
 
             <HBox spacing="10">
-                <Label text="ID:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
-                <TextField fx:id="txtIdAlmacen" editable="false" prefWidth="120" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="ID:" />
+                <TextField fx:id="txtIdAlmacen" editable="false" prefWidth="220" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
             </HBox>
 
             <HBox spacing="10">
-                <Label text="Tamaño:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                <Label style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Tamaño:" />
                 <ComboBox fx:id="comboTamano" promptText="Selecciona un tamaño" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -34,13 +34,20 @@
             </HBox>
 
             <HBox spacing="10">
-                <Label text="Ubicación:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                <Label style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ubicación:" />
                 <TextField fx:id="txtUbicacion" promptText="Calle, ciudad" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
             </HBox>
 
+            <!-- Precio Venta -->
             <HBox spacing="10">
-                <Label text="Precio:" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" />
-                <TextField fx:id="txtPrecio" promptText="Ej. 1000" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+                <Label style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Precio Venta:" />
+                <TextField fx:id="txtPrecioVenta" promptText="Ej. 1500" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+            </HBox>
+
+            <!-- Precio Renta -->
+            <HBox spacing="10">
+                <Label style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Precio Renta:" />
+                <TextField fx:id="txtPrecioRenta" promptText="Ej. 900" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
             </HBox>
 
             <Button fx:id="btnRegistrar" onAction="#OnRegistarAction" prefHeight="40" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="Registrar" />

@@ -2,43 +2,43 @@ package org.example.almasenesmorelos1;
 
 /**
  * Modelo de datos para un almacén.
- * Cada almacén está ligado a un ID de sede (sedeId),
- * que indica a qué administrador de sede pertenece.
+ * Ahora soporta dos precios: venta y renta.
  */
 public class Almacen {
-    private final String id;        // Identificador único del almacén (ej. ALM-001)
-    private final double tamanoM2;  // Tamaño en metros cuadrados
-    private final String ubicacion; // Dirección o ubicación del almacén
-    private final double precio;    // Precio del almacén
-    private final String sedeId;    // ID de la sede propietaria del almacén
+    private final String id;            // Identificador único del almacén (ej. ALM-001)
+    private final double tamanoM2;      // Tamaño en metros cuadrados
+    private final String ubicacion;     // Dirección o ubicación del almacén
+    private final String sedeId;        // ID de la sede propietaria del almacén
 
-    // --- Constructor principal ---
-    public Almacen(String id, double tamanoM2, String ubicacion, String sedeId, double precio) {
+    // NUEVO
+    private final double precioVenta;   // Precio de venta
+    private final double precioRenta;   // Precio de renta
+
+    // --- Constructor principal (NUEVO) ---
+    public Almacen(String id, double tamanoM2, String ubicacion, String sedeId,
+                   double precioVenta, double precioRenta) {
         this.id = id;
         this.tamanoM2 = tamanoM2;
         this.ubicacion = ubicacion;
         this.sedeId = sedeId;
-        this.precio = precio;
+        this.precioVenta = precioVenta;
+        this.precioRenta = precioRenta;
     }
 
     // --- Getters ---
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public double getTamanoM2() { return tamanoM2; }
+    public String getUbicacion() { return ubicacion; }
+    public String getSedeId() { return sedeId; }
 
-    public double getTamanoM2() {
-        return tamanoM2;
-    }
+    public double getPrecioVenta() { return precioVenta; }
+    public double getPrecioRenta() { return precioRenta; }
 
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public String getSedeId() {
-        return sedeId;
-    }
+    /**
+     * Compatibilidad hacia atrás:
+     * Si alguna parte antigua del código usa getPrecio(),
+     * devolvemos el precio de RENTA por defecto.
+     */
+    @Deprecated
+    public double getPrecio() { return precioRenta; }
 }

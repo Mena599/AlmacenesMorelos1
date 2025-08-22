@@ -2,9 +2,9 @@ package org.example.almasenesmorelos1.model;
 
 import java.time.LocalDate;
 
-public class AsignacionCliente{
+public class AsignacionCliente {
 
-    // Campos solicitados para la tabla
+    // Campos existentes
     private final String idAlmacen;
     private final String nombreCliente;
     private final String correo;
@@ -13,6 +13,10 @@ public class AsignacionCliente{
     private final LocalDate fechaAdquisicion;
     private final LocalDate fechaExpiracion;
 
+    // NUEVO: precioAplicado (opcional)
+    private final Double precioAplicado; // deja Double para poder ser null si usas el constructor antiguo
+
+    // Constructor original (compatibilidad)
     public AsignacionCliente(
             String idAlmacen,
             String nombreCliente,
@@ -22,6 +26,20 @@ public class AsignacionCliente{
             LocalDate fechaAdquisicion,
             LocalDate fechaExpiracion
     ) {
+        this(idAlmacen, nombreCliente, correo, telefono, estatus, fechaAdquisicion, fechaExpiracion, null);
+    }
+
+    // Constructor nuevo con precioAplicado
+    public AsignacionCliente(
+            String idAlmacen,
+            String nombreCliente,
+            String correo,
+            String telefono,
+            EstatusOperacion estatus,
+            LocalDate fechaAdquisicion,
+            LocalDate fechaExpiracion,
+            Double precioAplicado
+    ) {
         this.idAlmacen = idAlmacen;
         this.nombreCliente = nombreCliente;
         this.correo = correo;
@@ -29,6 +47,7 @@ public class AsignacionCliente{
         this.estatus = estatus;
         this.fechaAdquisicion = fechaAdquisicion;
         this.fechaExpiracion = fechaExpiracion;
+        this.precioAplicado = precioAplicado;
     }
 
     // Getters
@@ -39,4 +58,5 @@ public class AsignacionCliente{
     public EstatusOperacion getEstatus() { return estatus; }
     public LocalDate getFechaAdquisicion() { return fechaAdquisicion; }
     public LocalDate getFechaExpiracion() { return fechaExpiracion; }
+    public Double getPrecioAplicado() { return precioAplicado; }
 }

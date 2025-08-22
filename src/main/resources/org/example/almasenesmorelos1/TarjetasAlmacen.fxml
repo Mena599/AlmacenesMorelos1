@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="300.0" prefWidth="229.0" style="-fx-background-color: #607B8B; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.TargetasAlmacenesController">
+<AnchorPane fx:id="rootPane" prefHeight="369.0" prefWidth="229.0" style="-fx-background-color: #607B8B; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.TargetasAlmacenesController">
 
     <children>
         <ImageView fx:id="imgCliente" fitHeight="125.0" fitWidth="100.0" layoutX="65.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
@@ -25,14 +25,21 @@
         <Label layoutX="14.0" layoutY="234.0" text="Ubicación" textFill="WHITE" />
         <Label fx:id="lblUbicacion" layoutX="14.0" layoutY="251.0" textFill="WHITE" />
 
-        <!-- Precio -->
-        <Label layoutX="14.0" layoutY="274.0" text="Precio" textFill="WHITE" />
-        <Label fx:id="lblPrecio" layoutX="65.0" layoutY="274.0" textFill="WHITE" />
+        <!-- Precio Venta -->
+        <Label layoutX="14.0" layoutY="274.0" text="Venta" textFill="WHITE" />
+        <Label fx:id="lblPrecioVenta" layoutX="65.0" layoutY="274.0" textFill="WHITE" />
 
-        <Button fx:id="btnvr" layoutX="140.0" layoutY="252.0" mnemonicParsing="false" onAction="#ventarenta" prefHeight="17.0" prefWidth="75.0" style="-fx-background-radius: 8; -fx-background-color: #304850;" text="V/R" textFill="WHITE">
-            <graphic>
+        <!-- Precio Renta -->
+        <Label layoutX="14.0" layoutY="292.0" text="Renta" textFill="WHITE" />
+        <Label fx:id="lblPrecioRenta" layoutX="65.0" layoutY="292.0" textFill="WHITE" />
 
-            </graphic>
-        </Button>
+        <!-- Barra de acciones (botones lado a lado) -->
+        <HBox fx:id="accionesBar" layoutX="20.0" layoutY="329.0" spacing="10">
+            <children>
+                <Button fx:id="btnvr" mnemonicParsing="false" onAction="#ventarenta" prefHeight="22.0" prefWidth="91.0" style="-fx-background-radius: 8; -fx-background-color: #304850;" text="V/R" textFill="WHITE" />
+                <Button fx:id="btnDesasignar" mnemonicParsing="false" onAction="#desasignarCliente" prefHeight="22.0" prefWidth="95.0" style="-fx-background-radius: 8; -fx-background-color: #8B3A3A;" text="Desasignar" textFill="WHITE" />
+            </children>
+        </HBox>
+
     </children>
 </AnchorPane>

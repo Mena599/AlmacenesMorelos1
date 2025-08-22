@@ -18,8 +18,13 @@ public class RegistrarClientesController {
     @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
     @FXML private ComboBox<String> comboOperacion;  // "Venta" | "Renta"
-    @FXML private DatePicker dpFechaNacimiento;     // (usaremos como fecha de adquisición por ahora)
+    @FXML private DatePicker dpFechaNacimiento;     // usado como fecha de adquisición
     @FXML private Button btnRegistrar;
+
+    // === NUEVO: labels de precios y precio aplicado ===
+    @FXML private Label lblPrecioVenta;
+    @FXML private Label lblPrecioRenta;
+    @FXML private Label lblPrecioAplicado;
 
     // === Estado: el almacén al que asignaremos el cliente ===
     private Almacen almacen;
@@ -27,6 +32,46 @@ public class RegistrarClientesController {
     /** Llamado desde la tarjeta antes de mostrar el modal */
     public void setAlmacen(Almacen a) {
         this.almacen = a;
+
+        // Pinta precios del almacén en la UI
+        if (lblPrecioVenta != null) {
+            lblPrecioVenta.setText("$" + formatMoney(a.getPrecioVenta()));
+        }
+        if (lblPrecioRenta != null) {
+            lblPrecioRenta.setText("$" + formatMoney(a.getPrecioRenta()));
+        }
+
+        // Si ya hay selección, actualiza el precio aplicado; si no, deja en blanco
+        actualizarPrecioAplicado();
+    }
+
+    @FXML
+    private void initialize() {
+        // Asegurar valores en combo si no vienen del FXML
+        if (comboOperacion != null && (comboOperacion.getItems() == null || comboOperacion.getItems().isEmpty())) {
+            comboOperacion.getItems().setAll("Venta", "Renta");
+        }
+
+        // Selección por defecto y listener para actualizar precio aplicado
+        if (comboOperacion != null) {
+            if (comboOperacion.getValue() == null) {
+                comboOperacion.getSelectionModel().select("Renta"); // por defecto
+            }
+            comboOperacion.valueProperty().addListener((obs, oldVal, newVal) -> actualizarPrecioAplicado());
+        }
+    }
+
+    private void actualizarPrecioAplicado() {
+        if (almacen == null || lblPrecioAplicado == null || comboOperacion == null) return;
+
+        String op = comboOperacion.getValue();
+        if ("Venta".equalsIgnoreCase(op)) {
+            lblPrecioAplicado.setText("$" + formatMoney(almacen.getPrecioVenta()));
+        } else if ("Renta".equalsIgnoreCase(op)) {
+            lblPrecioAplicado.setText("$" + formatMoney(almacen.getPrecioRenta()));
+        } else {
+            lblPrecioAplicado.setText("—");
+        }
     }
 
     @FXML
@@ -53,7 +98,7 @@ public class RegistrarClientesController {
             return;
         }
 
-        // 2) Mapear estatus y preparar datos
+        // 2) Mapear estatus
         EstatusOperacion estatus = "Venta".equalsIgnoreCase(operacion)
                 ? EstatusOperacion.VENTA
                 : EstatusOperacion.RENTA;
@@ -61,7 +106,14 @@ public class RegistrarClientesController {
         String nombreCompleto = (nombre + " " + apellidos).trim();
         LocalDate fechaExp = fechaAdq.plusMonths(12); // regla provisional
 
-        // 3) Construir Asignación y guardar en DataStore
+        // 3) (OPCIONAL) Calcular precio aplicado (útil guardar en la asignación)
+        double precioAplicado = "Venta".equalsIgnoreCase(operacion)
+                ? almacen.getPrecioVenta()
+                : almacen.getPrecioRenta();
+
+        // 4) Construir Asignación y guardar en DataStore
+        //    Si no quieres guardar precioAplicado en el modelo, usa tu constructor actual;
+        //    si quieres guardarlo, ver apartado 3) abajo para ampliar el modelo.
         AsignacionCliente asig = new AsignacionCliente(
                 almacen.getId(),
                 nombreCompleto,
@@ -69,11 +121,13 @@ public class RegistrarClientesController {
                 telefono,
                 estatus,
                 fechaAdq,
-                fechaExp
+                fechaExp,
+                precioAplicado  // <--- nuevo
         );
+
         DataStore.getInstance().agregarAsignacion(asig);
 
-        // 4) Cerrar modal
+        // 5) Cerrar modal
         cerrarVentana();
     }
 
@@ -83,6 +137,7 @@ public class RegistrarClientesController {
     }
 
     private String safe(String s) { return s == null ? "" : s.trim(); }
+    private String formatMoney(double v) { return String.format("%,.2f", v); }
 
     private void alert(Alert.AlertType type, String title, String msg) {
         Alert a = new Alert(type);

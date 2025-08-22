@@ -11,7 +11,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Cambia el nombre del FXML según lo que quieras abrir primero
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("InicioSuperAdmin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
 
         // Opción A: Ajuste automático al contenido
         Scene scene = new Scene(fxmlLoader.load());

@@ -14,42 +14,41 @@ public class RegistrarAlmacenesController {
     @FXML private TextField txtIdAlmacen;
     @FXML private ComboBox<String> comboTamano;   // Grande / Mediano / Pequeño
     @FXML private TextField txtUbicacion;
-    @FXML private TextField txtPrecio;
+
+    // NUEVO: dos precios
+    @FXML private TextField txtPrecioVenta;
+    @FXML private TextField txtPrecioRenta;
+
     @FXML private Button btnRegistrar;
 
     private static int contadorId = 1;
+
+    // Usa tu store actual (dejas AppStore si es el que tienes)
     private final AppStore store = AppStore.getInstance();
+    // Si en tu proyecto usas DataStore en vez de AppStore, cambia la línea de arriba por:
+    // private final DataStore store = DataStore.getInstance();
 
     @FXML
     public void initialize() {
-        // ID autogenerado
         txtIdAlmacen.setText(generarIdAlmacen());
 
-        // Si el Combo viene vacío desde el FXML, lo llenamos aquí
         if (comboTamano.getItems() == null || comboTamano.getItems().isEmpty()) {
             comboTamano.getItems().setAll("Grande", "Mediano", "Pequeño");
         }
-        // Selección por defecto
         comboTamano.getSelectionModel().selectFirst();
     }
 
     private String generarIdAlmacen() {
-        // Obtener la fecha actual
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
-        String fechaRegistro = dateFormat.format(now); // Formato ddMMyy
-
-        // Generar 4 números aleatorios
+        String fechaRegistro = dateFormat.format(now);
         Random random = new Random();
-        int randomNumbers = random.nextInt(10000); // Genera un número entre 0 y 9999
-
-        // Formatear el ID del almacén
+        int randomNumbers = random.nextInt(10000);
         return String.format("ALM%d-%s-%04d", contadorId, fechaRegistro, randomNumbers);
     }
 
     @FXML
     private void OnRegistarAction() {
-        // --- Validaciones básicas ---
         if (comboTamano == null || comboTamano.getValue() == null) {
             warn("Selecciona un tamaño.");
             return;
@@ -58,20 +57,26 @@ public class RegistrarAlmacenesController {
             warn("Ingresa la ubicación.");
             return;
         }
-        if (txtPrecio == null || txtPrecio.getText().isBlank()) {
-            warn("Ingresa el precio (ej. 1000).");
+        if (txtPrecioVenta == null || txtPrecioVenta.getText().isBlank()) {
+            warn("Ingresa el precio de VENTA (ej. 1000).");
+            return;
+        }
+        if (txtPrecioRenta == null || txtPrecioRenta.getText().isBlank()) {
+            warn("Ingresa el precio de RENTA (ej. 800).");
             return;
         }
 
-        double precio;
+        double precioVenta;
+        double precioRenta;
         try {
-            precio = Double.parseDouble(txtPrecio.getText().trim());
-            if (precio <= 0) {
-                warn("El precio debe ser mayor que cero.");
+            precioVenta = Double.parseDouble(txtPrecioVenta.getText().trim());
+            precioRenta = Double.parseDouble(txtPrecioRenta.getText().trim());
+            if (precioVenta <= 0 || precioRenta <= 0) {
+                warn("Los precios deben ser mayores que cero.");
                 return;
             }
         } catch (NumberFormatException ex) {
-            warn("El precio debe ser numérico (ej. 1000 o 1000.50).");
+            warn("Los precios deben ser numéricos (ej. 1000 o 1000.50).");
             return;
         }
 
@@ -79,17 +84,16 @@ public class RegistrarAlmacenesController {
         String tam = comboTamano.getValue();
         String ubicacion = txtUbicacion.getText().trim();
 
-        double m2 = mapTamanoToM2(tam); // Grande/Mediano/Pequeño → m²
+        double m2 = mapTamanoToM2(tam);
 
-        // ⚠️ Sede del admin actual (sesión en memoria)
         String sedeId = SessionManager.get().getSedeId();
         if (sedeId == null || sedeId.isBlank()) {
             warn("No se pudo obtener la sede del administrador. Vuelve a iniciar sesión.");
             return;
         }
 
-        // --- CREA EL MODELO ---
-        Almacen almacen = new Almacen(id, m2, ubicacion, sedeId, precio);
+        // --- CREA EL MODELO con DOS PRECIOS ---
+        Almacen almacen = new Almacen(id, m2, ubicacion, sedeId, precioVenta, precioRenta);
 
         // --- Guarda en Store y cierra ---
         store.addAlmacen(almacen);

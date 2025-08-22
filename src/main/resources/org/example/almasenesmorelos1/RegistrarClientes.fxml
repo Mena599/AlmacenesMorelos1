@@ -6,35 +6,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<!-- Formulario de registro de cliente para JavaFX Scene Builder -->
-
-<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="421.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarClientesController">
+<AnchorPane fx:id="rootPane" prefHeight="750.0" prefWidth="421.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.almasenesmorelos1.RegistrarClientesController">
 
     <children>
-        <!-- Título del formulario -->
-        <Label fx:id="lblTitulo" layoutX="101.0" layoutY="27.0" prefHeight="35.0" prefWidth="237.0" style="-fx-text-fill: #87A1B1; -fx-font-weight: bold;" text="Registro de Cliente" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="83.0">
+        <!-- Título -->
+        <Label fx:id="lblTitulo" layoutX="101.0" layoutY="27.0" prefHeight="35.0" prefWidth="237.0" style="-fx-text-fill: #87A1B1; -fx-font-weight: bold;" text="Registro de Cliente">
             <font><Font name="Arial" size="24.0" /></font>
         </Label>
 
-        <!-- Campo Nombre -->
-        <Label fx:id="lblNombre" layoutX="50.0" layoutY="100.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su nombre" />
-        <TextField fx:id="txtNombre" layoutX="50.0" layoutY="125.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+        <!-- Nombre -->
+        <Label fx:id="lblNombre" layoutX="58.0" layoutY="84.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su nombre" />
+        <TextField fx:id="txtNombre" layoutX="50.0" layoutY="104.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- Campo Apellidos -->
-        <Label fx:id="lblApellidos" layoutX="50.0" layoutY="180.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese sus apellidos" />
-        <TextField fx:id="txtApellidos" layoutX="50.0" layoutY="205.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+        <!-- Apellidos -->
+        <Label fx:id="lblApellidos" layoutX="51.0" layoutY="150.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese sus apellidos" />
+        <TextField fx:id="txtApellidos" layoutX="48.0" layoutY="180.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- Campo Correo Electrónico -->
-        <Label fx:id="lblCorreo" layoutX="50.0" layoutY="260.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su correo electrónico" />
-        <TextField fx:id="txtCorreo" layoutX="50.0" layoutY="285.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+        <!-- Correo -->
+        <Label fx:id="lblCorreo" layoutX="56.0" layoutY="227.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su correo electrónico" />
+        <TextField fx:id="txtCorreo" layoutX="50.0" layoutY="254.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- Campo Teléfono -->
-        <Label fx:id="lblTelefono" layoutX="50.0" layoutY="340.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su número de teléfono" />
-        <TextField fx:id="txtTelefono" layoutX="50.0" layoutY="365.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+        <!-- Teléfono -->
+        <Label fx:id="lblTelefono" layoutX="52.0" layoutY="300.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su número de teléfono" />
+        <TextField fx:id="txtTelefono" layoutX="50.0" layoutY="332.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
 
-        <!-- NUEVO: Venta/Renta -->
-        <Label layoutX="50.0" layoutY="420.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Operación (Venta/Renta)" />
-        <ComboBox fx:id="comboOperacion" layoutX="50.0" layoutY="445.0" prefHeight="35.0" prefWidth="300.0" promptText="Selecciona una opción" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;">
+        <!-- Operación -->
+        <Label layoutX="52.0" layoutY="381.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Operación (Venta/Renta)" />
+        <ComboBox fx:id="comboOperacion" layoutX="50.0" layoutY="412.0" prefHeight="35.0" prefWidth="300.0" promptText="Selecciona una opción" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Venta" />
@@ -43,12 +41,45 @@
             </items>
         </ComboBox>
 
-        <!-- Campo Fecha de Nacimiento (movido más abajo) -->
-        <Label fx:id="lblFechaNacimiento" layoutX="59.0" layoutY="515.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su fecha de nacimiento" />
-        <DatePicker fx:id="dpFechaNacimiento" layoutX="50.0" layoutY="542.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+        <!-- TARJETA DE PRECIOS (reemplaza el TitledPane) -->
+        <VBox layoutX="50.0" layoutY="465.0" prefHeight="104.0" prefWidth="300.0" spacing="10" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 12;">
+            <!-- Encabezado -->
+            <Label style="-fx-text-fill: #87A1B1; -fx-font-size: 14px; -fx-font-weight: bold;" text="Precios del almacén" />
 
-        <!-- Botón Registrar (movido) -->
-        <Button fx:id="btnRegistrar" layoutX="150.0" layoutY="660.0" mnemonicParsing="false" onAction="#OnRegistarAction" prefHeight="45.0" prefWidth="167.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20;" text="Registrar Cliente" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="35.0">
+            <!-- Grid de precios -->
+            <GridPane hgap="10" vgap="6">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="45" />
+                    <ColumnConstraints percentWidth="55" />
+                </columnConstraints>
+
+                <Label style="-fx-text-fill: #2C3E50;" text="Precio Venta:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="lblPrecioVenta" style="-fx-text-fill: #2C3E50; -fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label style="-fx-text-fill: #2C3E50;" text="Precio Renta:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="lblPrecioRenta" style="-fx-text-fill: #2C3E50; -fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+
+            <!-- Separador -->
+            <Separator />
+
+            <!-- Precio aplicado (badge) -->
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label style="-fx-text-fill: #2C3E50;" text="Precio aplicado:" />
+                <Label fx:id="lblPrecioAplicado" style="-fx-background-color: #304850; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 12; -fx-font-weight: bold;" />
+            </HBox>
+        </VBox>
+
+        <!-- Fecha (bajamos un poco para no encimar) -->
+        <Label fx:id="lblFechaNacimiento" layoutX="51.0" layoutY="612.0" style="-fx-text-fill: #2C3E50; -fx-font-size: 14px; -fx-font-weight: bold;" text="Ingrese su fecha de nacimiento" />
+        <DatePicker fx:id="dpFechaNacimiento" layoutX="50.0" layoutY="632.0" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #87A1B1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;" />
+
+        <!-- Botón Registrar -->
+        <Button fx:id="btnRegistrar" layoutX="127.0" layoutY="690.0" mnemonicParsing="false" onAction="#OnRegistarAction" prefHeight="45.0" prefWidth="167.0" style="-fx-background-color: #87A1B1; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;" text="Registrar">
             <font><Font name="Arial" size="16.0" /></font>
         </Button>
     </children>

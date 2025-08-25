@@ -1,39 +1,48 @@
 package org.example.almasenesmorelos1;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.almasenesmorelos1.data.DataStore;
+import org.example.almasenesmorelos1.daos.AlmacenDAO;
 
-/**
- * Store central de la app.
- * - Mantiene el inventario (almacenes).
- * - Se conecta con las vistas mediante listas observables.
- * - Fácil de migrar a BD: solo persistes aquí y la UI se actualiza sola.
- */
 public class AppStore {
 
-    // --- Singleton ---
     private static final AppStore INSTANCE = new AppStore();
     public static AppStore getInstance() { return INSTANCE; }
     private AppStore() {}
 
-    // --- Estado central ---
-    private final ObservableList<Almacen> inventario = FXCollections.observableArrayList();
+    private final DataStore ds = DataStore.getInstance();
+    private final AlmacenDAO almacenDAO = new AlmacenDAO();
 
-    // --- Getter para que las vistas se suscriban ---
     public ObservableList<Almacen> getInventario() {
-        return inventario;
+        return ds.getInventario();
     }
 
-    // --- Operaciones básicas ---
     public void addAlmacen(Almacen a) {
-        inventario.add(a);
+        try {
+            // 1) Persiste en BD
+            almacenDAO.insertar(a);
+            // 2) Refleja en UI (sin duplicados)
+            ds.addAlmacen(a);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // aquí podrías notificar a la UI con un Alert desde el controller si lo deseas
+        }
     }
 
     public void removeAlmacen(Almacen a) {
-        inventario.remove(a);
+        try {
+            almacenDAO.eliminar(a.getId());
+            ds.removeAlmacen(a);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void clearAll() {
-        inventario.clear();
+        ds.clearInventario();
+    }
+
+    public void refrescarAlmacenesDesdeBD() {
+        ds.refrescarAlmacenesDesdeBD();
     }
 }

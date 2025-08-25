@@ -8,8 +8,6 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.almasenesmorelos1.data.DataStore;
-import org.example.almasenesmorelos1.model.AsignacionCliente;
-
 public class TargetasAlmacenesController {
 
     @FXML private Label lblId;

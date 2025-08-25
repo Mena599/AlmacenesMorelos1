@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import org.example.almasenesmorelos1.data.DataStore;
 import org.example.almasenesmorelos1.model.AdminSede;
+import org.example.almasenesmorelos1.model.Sede;
 
 public class AdminSedeController {
 
@@ -26,22 +27,34 @@ public class AdminSedeController {
 
     @FXML
     private void initialize() {
-        // 1) Render inicial
-        TargetasFlow.getChildren().clear();
-        DataStore.getInstance().getAdmins()
-                .forEach(a -> TargetasFlow.getChildren().add(createAdminCard(a)));
+        // Asegura que SEDES estén cargadas desde BD
+        try { DataStore.getInstance().refrescarSedesDesdeBD(); } catch (Throwable ignored) {}
 
-        // 2) Reactivo
-        DataStore.getInstance().getAdmins().addListener((ListChangeListener<AdminSede>) change -> {
-            TargetasFlow.getChildren().setAll(
-                    DataStore.getInstance().getAdmins().stream()
-                            .map(this::createAdminCard)
-                            .toList()
-            );
-        });
+        // Render inicial (derivado de SEDES con ID_ADMIN asignado)
+        renderFromSedes();
 
-        // 3) Botón para abrir modal
+        // Reactivo: si cambian sedes (p.ej. asignas un admin), re-render
+        DataStore.getInstance().getSedes().addListener((ListChangeListener<Sede>) change -> renderFromSedes());
+
+        // Botón para abrir modal
         btnAgregar.setOnAction(e -> abrirFormularioAdminSede());
+    }
+
+    /** Reconstruye tarjetas de admins a partir de las sedes que tienen ID_ADMIN. */
+    private void renderFromSedes() {
+        TargetasFlow.getChildren().clear();
+
+        for (Sede s : DataStore.getInstance().getSedes()) {
+            String u = s.getIdAdmin();
+            if (u != null && !u.isBlank()) {
+                // No tenemos nombre/correo/tel persistidos; mostramos username como nombre
+                AdminSede admin = new AdminSede(u, "", "");
+                admin.setUsername(u);
+                admin.setPassword(u);       // demo
+                admin.setSedeId(s.getId());
+                TargetasFlow.getChildren().add(createAdminCard(admin));
+            }
+        }
     }
 
     /** Carga la tarjeta de admin y setea datos. */
@@ -53,10 +66,11 @@ public class AdminSedeController {
             Node card = loader.load();
 
             TargetasAdminSedeController ctrl = loader.getController();
-            ctrl.setLblNombre(a.getNombre());
-            ctrl.setLblCorreo(a.getCorreo());
-            ctrl.setLblTelefono(a.getTelefono());
-            // Si tienes sede/estado:
+            // Mostramos username como "nombre" visible si no tenemos otro dato
+            ctrl.setLblNombre(a.getUsername() != null && !a.getUsername().isBlank() ? a.getUsername() : a.getNombre());
+            ctrl.setLblCorreo(a.getCorreo() == null ? "" : a.getCorreo());
+            ctrl.setLblTelefono(a.getTelefono() == null ? "" : a.getTelefono());
+            // Si tu tarjeta tiene label de sede:
             // ctrl.setLblSede(a.getSedeId());
 
             return card;
@@ -79,6 +93,8 @@ public class AdminSedeController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Registrar Admin de Sede");
             stage.showAndWait();
+
+            // Al cerrar, si se asignó admin, DataStore.getSedes() cambiará y se re-renderiza solo
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "No se pudo abrir el formulario.");
